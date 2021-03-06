@@ -6,7 +6,11 @@
     .container {
         width: 100%;
       }
-    .img{
-        max-height: 100%;
-        max-width: 100%;
+    .img_carousel{
+        max-height: 800px;
+        max-width: 500px;
+        margin:0px auto;
+    }
+    .nav-item{
+        background-color: rgb(174, 209, 19);
     }

@@ -22,10 +22,16 @@
       integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
       crossorigin="anonymous"
     ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"
+      integrity="sha512-gh+25Y0CTHtw1FSJ4gDKYDFlZ84oV0l1bY5v7xrIwep7M1aV+7JgUaTu55bMerCblbPUD22MKlStyUwO9lHq4w=="
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
-    <div class="container-fluid">
+    <div class="container-fluid" id="app">
       <h1 class="alert alert-primary">水電資料</h1>
+      <span>時間{{time}}</span>
       <div class="row nav justify-content-center">
         <ul class="nav nav-pills">
           <li class="nav-item">
@@ -51,59 +57,34 @@
       <div class="row">
         <div class="col-12">
           <h2>設備列表</h2>
+          <div class="input-group input-group-lg">
+            <div class="input-group-prepend">
+              <button class="input-group-text">搜尋</button>
+            </div>
+            <select name="" id="" v-model="device_sort">
+              <option selected>全部</option>
+              <option>偵煙器</option>
+              <option>分電盤</option>
+            </select>
+            <input type="text" class="form-control" v-model.trim="input" />
+          </div>
           <div>
             <h2>偵煙器</h2>
-            <div class="input-group input-group-lg">
-              <div class="input-group-prepend">
-                <button class="input-group-text">搜尋</button>
-              </div>
-              <input type="text" class="form-control" />
-            </div>
             <div class="plane_content">
-              <ul>
-                <li>項次</li>
-                <li>迴路編號</li>
-                <li>位置</li>
-              </ul>
-              <ul>
-                <li>1</li>
-                <li>L1-111</li>
-                <li>3Fsss</li>
-              </ul>
-              <ul>
-                <li>2</li>
-                <li>L1-222</l>
-                <li>4Fxxx</li>
-              </ul>
-              <ul>
-                <li>3</li>
-                <li>L1-332</l>
-                <li>4Fxxx</li>
+              <ul v-for="(item,index) in device.smoker">
+                <li>{{index}}</li>
+                <li>{{item.loop}}</li>
+                <li>{{item.place}}</li>
               </ul>
             </div>
           </div>
           <div>
             <h2>分電盤</h2>
             <div class="plane_content">
-              <ul>
-                <li>項次</li>
-                <li>盤名</li>
-                <li>位置</li>
-              </ul>
-              <ul>
-                <li>1</li>
-                <li>LP5</li>
-                <li>3Fsss</li>
-              </ul>
-              <ul>
-                <li>2</li>
-                <li>RP2</l>
-                <li>4Fxxx</li>
-              </ul>
-              <ul>
-                <li>3</li>
-                <li>ELP2</l>
-                <li>4Fxxx</li>
+              <ul v-for=" (item,index) in device.panel_borad">
+                <li>{{index}}</li>
+                <li>{{item.name}}</li>
+                <li>{{item.upstream}}</li>
               </ul>
             </div>
           </div>
@@ -111,4 +92,5 @@
       </div>
     </div>
   </body>
+  <script src="./javascript/TRTC.js"></script>
 </html>

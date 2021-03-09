@@ -35,37 +35,64 @@
       <div class="row nav justify-content-center">
         <ul class="nav nav-pills">
           <li class="nav-item">
-            <a class="nav-link active" href="#">秀朗橋</a>
+            <a class="nav-link" href="#">Y8秀朗橋</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">景平</a>
+            <a class="nav-link" href="#">Y9景平</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="#">Y10景安</a>
           </li>
           <li class="nav-item">
-            <a
-              class="nav-link disabled"
-              href="#"
-              tabindex="-1"
-              aria-disabled="true"
-              >Disabled</a
-            >
+            <a class="nav-link" href="#">Y11中和</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Y12橋和</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Y13中原</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Y14</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Y15</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Y16</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Y17</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Y18</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Y19</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">南機場</a>
           </li>
         </ul>
       </div>
       <div class="row">
         <div class="col-12">
-          <h2>設備列表</h2>
+          <h2>中原站設備列表</h2>
           <div class="input-group input-group-lg">
             <div class="input-group-prepend">
               <button class="input-group-text">搜尋</button>
             </div>
+            <select name="" id="">
+              <option selected>全部</option>
+              <option>水電</option>
+              <option>消防</option>
+            </select>
             <select name="" id="" v-model="device_sort">
               <option selected>全部</option>
               <option>偵煙器</option>
               <option>分電盤</option>
             </select>
+
             <input type="text" class="form-control" v-model.trim="input" />
           </div>
           <div>

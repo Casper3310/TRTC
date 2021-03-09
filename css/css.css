@@ -46,3 +46,8 @@ div {
   text-align: center;
   border: aqua 1px solid;
 }
+.flex_station_button {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}

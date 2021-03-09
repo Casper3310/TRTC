@@ -13,6 +13,13 @@ let device = {
   ],
 };
 
+let Circular_line = {
+  station: [
+    {
+      Y7: [{ station_name: "十四張", device: [{ water: "aaa", fire: "sss" }] }],
+    },
+  ],
+};
 let app = new Vue({
   el: "#app",
   data: {

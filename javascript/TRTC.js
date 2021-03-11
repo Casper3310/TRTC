@@ -19,26 +19,15 @@ let Circular_line = {
     {
       Y13: [
         {
-          station_name: "中原",
+          name: "中原",
           device: [
             {
-              device_water: "水電設備",
-              device_fire: "消防設備",
+              water_name: "水電設備",
+              fire_name: "消防設備",
               water: [
                 {
-                  panel_borad: [
-                    {
-                      name: "盤名",
-                      place: "位置",
-                      place_image: "",
-                      upstream: "上游",
-                    },
-                    {
-                      name: "LP1",
-                      place: "aaa",
-                      place_image: "",
-                      upstream: "PA1",
-                    },
+                  name: ["照明分電盤", "插座分電盤", "泵浦", "接地箱"],
+                  light_panel: [
                     {
                       name: "LP2",
                       place: "bbb",
@@ -50,6 +39,20 @@ let Circular_line = {
                       place: "ccc",
                       place_image: "",
                       upstream: "PB3",
+                    },
+                  ],
+                  socket_panel: [
+                    {
+                      name: "盤名",
+                      place: "位置",
+                      place_image: "",
+                      upstream: "上游",
+                    },
+                    {
+                      name: "LP1",
+                      place: "aaa",
+                      place_image: "",
+                      upstream: "PA1",
                     },
                   ],
                   panel_borad_map: [
@@ -89,8 +92,21 @@ let app = new Vue({
   data: {
     input: "",
     device_sort: "全部",
-    device: Circular_line,
-
     time: new Date().toLocaleString(),
+    device: Circular_line,
+  },
+  computed: {
+    station() {
+      return this.device.station[0].Y13[0];
+    },
+    equipment() {
+      return this.station.device[0];
+    },
+    water_eq() {
+      return this.equipment.water[0];
+    },
+    light_panel() {
+      return this.equipment.water_eq.light_panel;
+    },
   },
 });

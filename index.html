@@ -77,38 +77,34 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <h2>中原站設備列表</h2>
+          <h2>{{station.name}}站設備列表</h2>
           <div class="input-group input-group-lg">
             <div class="input-group-prepend">
               <button class="input-group-text">搜尋</button>
             </div>
             <select name="" id="">
               <option selected>全部</option>
-              <option>水電</option>
-              <option>消防</option>
+              <option>{{device_water}}</option>
+              <option>{{device_fire}}</option>
             </select>
             <select name="" id="" v-model="device_sort">
               <option selected>全部</option>
               <option>偵煙器</option>
               <option>分電盤</option>
             </select>
-
             <input type="text" class="form-control" v-model.trim="input" />
           </div>
           <div>
-            <h2>偵煙器</h2>
+            <h2>{{equipment.water_name}}</h2>
             <div class="plane_content">
-              <ul v-for="(item,index) in device.smoker">
-                <li>{{index}}</li>
-                <li>{{item.loop}}</li>
-                <li>{{item.place}}</li>
+              <ul v-for="(item,index) in water_eq.name">
+                <li>{{item}}</li>
               </ul>
             </div>
           </div>
-          <div v-for="item in device">{{item}}</div>
-          <img :src="device.sss" alt="" />
+          <div>{{water_eq_name}}</div>
           <div>
-            <h2>分電盤</h2>
+            <h2>{{equipment.fire_name}}</h2>
             <div class="plane_content">
               <ul v-for=" (item,index) in device.panel_borad">
                 <li>{{index}}</li>

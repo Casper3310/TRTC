@@ -31,7 +31,7 @@
   <body>
     <div class="container-fluid" id="app">
       <h1 class="alert alert-primary">水電資料</h1>
-      <span>時間{{time}}</span>
+      <span>現在時間{{time}}</span>
       <div class="row nav justify-content-center">
         <ul class="nav nav-pills">
           <li class="nav-item">
@@ -97,19 +97,28 @@
           <div>
             <h2>{{equipment.water_name}}</h2>
             <div class="plane_content">
-              <ul v-for="(item,index) in water_eq.name">
-                <li>{{item}}</li>
+              <ul v-if="water_eq.show">
+                <li v-for="(item,index) in water_eq.list">
+                  <a class="link" :href="item.link">{{item.name}}</a>
+                </li>
+              </ul>
+              <ul v-else>
+                無資料
               </ul>
             </div>
           </div>
           <div>{{water_eq_name}}</div>
           <div>
             <h2>{{equipment.fire_name}}</h2>
+
             <div class="plane_content">
-              <ul v-for=" (item,index) in device.panel_borad">
-                <li>{{index}}</li>
-                <li>{{item.name}}</li>
-                <li>{{item.upstream}}</li>
+              <ul v-if="fire_eq.show">
+                <li v-for=" (item,index) in fire_eq.list">
+                  <a class="link" :href="item.link">{{item.name}}</a>
+                </li>
+              </ul>
+              <ul v-else>
+                無資料
               </ul>
             </div>
           </div>

@@ -51,3 +51,18 @@ div {
   justify-content: center;
   flex-wrap: wrap;
 }
+.link {
+  color:rgb(0, 0, 0);
+}
+.plane_list>ul {
+  text-align: center;
+  border: black 1px solid;
+  margin: 0;
+  }
+.plane_list>ul>li{
+  display: inline-block;
+  text-align: center;
+}
+.input_group{
+  text-align: center;
+}

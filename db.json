@@ -1,0 +1,32 @@
+{
+  "light_panel": [
+    {
+      "id": 1,
+      "name": "LP2",
+      "place": "bbb",
+      "place_image": "aa",
+      "upstream": "PA2",
+      "link": "ss"
+    },
+    {
+      "id": 2,
+      "name": "ERP4",
+      "place": "ccc",
+      "place_image": "aa",
+      "upstream": "PB3",
+      "link": "ss"
+    },
+    {
+      "name": "bbb",
+      "place": "bbb",
+      "upstream": "bbb",
+      "id": 3
+    },
+    {
+      "name": "ccc",
+      "place": "ccc",
+      "upstream": "ccc",
+      "id": 4
+    }
+  ]
+}

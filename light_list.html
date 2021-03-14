@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>照明分電盤資料</title>
+    <link rel="stylesheet" href="css/css.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"
+      integrity="sha512-gh+25Y0CTHtw1FSJ4gDKYDFlZ84oV0l1bY5v7xrIwep7M1aV+7JgUaTu55bMerCblbPUD22MKlStyUwO9lHq4w=="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"
+      integrity="sha512-otOZr2EcknK9a5aa3BbMR9XOjYKtxxscwyRHN6zmdXuRfJ5uApkHB7cz1laWk2g8RKLzV9qv/fl3RPwfCuoxHQ=="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="container-fluid" id="app">
+      <h1 class="alert alert-primary">水電資料</h1>
+      <span>現在時間</span>
+      <div class="row nav justify-content-center">
+        <ul class="nav nav-pills">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Y8秀朗橋</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Y9景平</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Y10景安</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Y11中和</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Y12橋和</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Y13中原</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Y14</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Y15</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Y16</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Y17</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Y18</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Y19</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">南機場</a>
+          </li>
+        </ul>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div>
+            <h2></h2>
+            <div class="plane_list">
+              <div class="input_group">
+                盤名<input
+                  type="text"
+                  placeholder="盤名"
+                  v-model.trim="input.name"
+                />
+                位置<input
+                  type="text"
+                  placeholder="位置"
+                  v-model.trim="input.place"
+                />
+                上游<input
+                  type="text"
+                  placeholder="上游"
+                  v-model.trim="input.upstream"
+                />
+                <button @click="submitHander">送出</button>
+                <button @click="cancelHander">取消</button>
+              </div>
+              <ul v-for="(item,index) in contact">
+                <li>
+                  <a class="link list_horizontally" :href="item.link">
+                    盤名:{{item.name}}
+                  </a>
+                </li>
+                <li>
+                  <a class="link list_horizontally" :href="item.link">
+                    位置:{{item.place}}
+                  </a>
+                </li>
+                <li>
+                  <a class="link list_horizontally" :href="item.link">
+                    上游:{{item.upstream}}
+                  </a>
+                </li>
+                <button @click="edithander(index)">修改</button>
+                <button @click="delethander(index)">刪除</button>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="./javascript/light_list.js"></script>
+</html>

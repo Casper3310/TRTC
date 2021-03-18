@@ -43,6 +43,16 @@ const routes = [
       }
     ]
   },
+  {
+    path: '/query_params',
+    name: 'query_params',
+    redirect: '/query_params/1'
+  },
+  {
+    path: '/query_params/:day',
+    name: 'query_params',
+    component: () => import('../views/query_params.vue')
+  }
 ]
 
 const router = new VueRouter({

@@ -5,6 +5,7 @@
       <router-link to="/about">About</router-link>
       <router-link to="/test">test</router-link>
       <router-link to="/test2">test2</router-link>
+      <router-link to="/query_params">query_params</router-link>
     </div>
     <router-view/>
   </div>

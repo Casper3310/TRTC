@@ -50,7 +50,6 @@ const routes = [
   },
   {
     path: '/query_params/:day',
-    name: 'query_params',
     component: () => import('../views/query_params.vue')
   }
 ]

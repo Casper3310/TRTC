@@ -10,11 +10,12 @@
     </div>
 </template>
 <script>
+import test_store from '../store/test_store.js'
 export default {
     computed:{
         day:{
             get(){
-                return this.$store.state.day
+                return this.$store.state.test_store ? this.$store.state.test_store.day :0
             },
             set(val){
                 //return this.$store.state.day = val
@@ -22,10 +23,10 @@ export default {
             }
         },
         header(){
-            return this.$store.state.header
+            return this.$store.state.test_store ? this.$store.state.test_store.header : []
         },
         list(){
-            return this.$store.state.list
+            return this.$store.state.test_store ? this.$store.state.test_store.list :[]
         }
     },
     methods:{
@@ -50,8 +51,13 @@ export default {
     mounted(){
         let day = parseInt(this.$route.params.day);
         //this.day = day
+        this.$store.registerModule('test_store',test_store)
         this.$store.dispatch('getlist',day)
         document.addEventListener("keyup",this.change)
+    },
+    beforeDestroy(){
+        this.$store.unregisterModule('test_store')
+        document.removeEventListener("keyup",this.change);
     },
     watch:{
         $route(){

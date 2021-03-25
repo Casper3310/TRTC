@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import b1 from './components/view/b1.vue'
+import b2 from './components/view/b2.vue'
 
 Vue.use(VueRouter)
 

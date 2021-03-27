@@ -14,7 +14,7 @@
                 <form>
                     <div class="form-group">
                         <label for="image">選擇圖片</label>
-                        <input type="file" v-on:change="attachImage" class="form-control" id="image">
+                        <input type="file" v-on:change="attachImage" ref="Newimage" class="form-control" id="image">
                     </div>
                 </form>
                 <hr>
@@ -41,7 +41,8 @@ export default {
   },
   methods:{
         attachImage(){
-            console.log("attachImage")
+            //this.data.image = this.$Newimage.file[0];
+            console.log(this)
         },
         HideDashTable(){
             this.$refs.dashtable.hide()
@@ -50,7 +51,7 @@ export default {
             this.$refs.dashtable.show()
         },
         Create(){
-            console.log("111")
+            console.log(this)
         }
     }
 }

@@ -19,6 +19,22 @@ const routes = [
         // which is lazy-loaded when the route is visited.
         component: () => import('./components/view/b2.vue')
     },
+    {
+        path: '/',
+        name: 'home',
+        // route level code-splitting
+        component: () => import('./components/StationButton.vue')
+    },
+    {
+        path: '/Y9',
+        //name: 'home',
+        component: () => import('./components/DeviceList.vue')
+    },
+    {
+        path: '/Y9/light',
+        //name: 'home',
+        component: () => import('./components/DevicePlane.vue')
+    },
 ]
 
 const router = new VueRouter({

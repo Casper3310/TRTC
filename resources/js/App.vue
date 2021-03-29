@@ -9,18 +9,14 @@
           <router-view>
             <StationButton></StationButton>
           </router-view> 
-          <DashTable></DashTable>
-          
         </div>
       </div>
-      
     </div>
 </template>
 <script>
 import StationBar from './components/StationBar.vue'
 import SearchComponent from './components/SearchComponent.vue'
 import DevicePlane from './components/DevicePlane.vue'
-import DashTable from './components/DashTable.vue'
 import StationButton from './components/StationButton.vue'
 import DeviceList from './components/DeviceList.vue'
 export default {
@@ -28,7 +24,6 @@ export default {
         StationBar,
         SearchComponent,
         DevicePlane,
-        DashTable,
         StationButton,
         DeviceList
     }

@@ -13,9 +13,9 @@ class StationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        dd($request->all());
-        //
+    {     
+        $station = Station::orderBy('created_at','desc')-> paginate();
+        return response()->json($station, 200);
     }
 
     /**
@@ -36,7 +36,23 @@ class StationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|min:3',
+            'device' => 'required|min:3',
+            'image' => 'required|image|mimes:jpeg,png,jpg'
+        ]);
+        $station = New Station();
+        $station->name = $request->name;
+        $station->device = $request->device;
+        $path = $request->file('image')->store('station_image');
+        $station->image = $path;
+        if($station->save()){
+            return response()->json($station, 200);
+        }else{
+            return response()->json($station, 500);
+        };
+
+        dd($request->all());
     }
 
     /**

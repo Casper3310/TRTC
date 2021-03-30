@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Station;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class StationController extends Controller
 {
@@ -95,8 +96,20 @@ class StationController extends Controller
      * @param  \App\Station  $station
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Station $station)
+    public function destroy( $id)
     {
-        //
+        $item = Station::find($id);
+        if($item->delete()){
+            Storage::delete($item->image);
+            return response()->json([
+                'message'=>'成功刪除',
+                'status'=>'200'
+            ], 200);
+        }else{
+            return response()->json([
+                'message'=>'錯誤',
+                'status'=>'500'
+            ], 500);
+        }
     }
 }

@@ -2,6 +2,7 @@
     <div>
         <div>
           <h2>OO設備</h2>
+          <button class="btn btn-primary btn-sm" v-on:click="ShowDashTable">新增</button>
             <div class="plane_content table">
               <table>
                 <thead>
@@ -20,19 +21,20 @@
                     <td>{{item.device}}</td>
                     <td><img class="NewimagePreview" :src="`${$store.state.serverPath}/storage/${item.image}`" 
                     :alt="item.name"></td>
-                    <td>555</td>
+                    <td>
+                      <div>  
+                        <button class="btn btn-success btn-sm" >讀取</button>
+                        <button class="btn btn-warning btn-sm" >更新</button>
+                        <button class="btn btn-danger btn-sm" @click="DeleteStaionData(item,index)">刪除</button>
+                      </div>      
+                    </td>
                   </tr>
                 </tbody>
               </table>
             </div>
         </div>
         <div>
-        <div>
-            <button class="btn btn-primary btn-sm" v-on:click="ShowDashTable">新增</button>
-            <button class="btn btn-success btn-sm" >讀取</button>
-            <button class="btn btn-warning btn-sm" >更新</button>
-            <button class="btn btn-danger btn-sm" >刪除</button>
-        </div>
+  
         <b-modal ref="dashtable" hide-footer title="輸入資料">
             <div class="d-block">
                 <form v-on:submit.prevent="Create">
@@ -94,7 +96,6 @@ export default {
             try {
                 const res = await stationData_serveice.LoadStationData();
                 this.stationlist = res.data.data;
-                console.log(this.stationlist)
             } catch (error) {
               console.log(error)
                 this.flashMessage.error({
@@ -102,6 +103,16 @@ export default {
                     time:5000
                     });
             }
+        },
+        DeleteStaionData:async function(item,index){
+          if(window.confirm(`你確定刪除${item.name}`)){
+            try {
+              await stationData_serveice.DeleteStaionData(item.id);
+              this.stationlist.splice(index,1)
+            } catch (error) {
+              console.log(error);
+            }
+          }
         },
         attachImage(){
             this.stationData.image = this.$refs.Newimage.files[0];
@@ -135,6 +146,12 @@ export default {
                 message: '成功輸入!',
                 time:5000
                 });
+                this.stationData={
+                  name:"",
+                  device:"",
+                  image:"",
+                }
+                
             } catch (error) {
                 switch (error.response.status) {
                     case 422:

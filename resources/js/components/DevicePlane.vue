@@ -4,13 +4,13 @@
           <h2>OO設備</h2>
           <button class="btn btn-primary btn-sm" v-on:click="ShowDashTable">新增</button>
             <div class="plane_content table">
-              <table>
+              <table v-if="stationlist.length">
                 <thead>
                   <tr>
-                    <th scope="col">id</th>
-                    <th scope="col">name</th>
-                    <th scope="col">device</th>
-                    <th scope="col">image</th>
+                    <th scope="col">項次</th>
+                    <th scope="col">盤名</th>
+                    <th scope="col">位置</th>
+                    <th scope="col">圖片</th>
                     <th scope="col">操作</th>
                   </tr>
                 </thead>
@@ -23,21 +23,21 @@
                     :alt="item.name"></td>
                     <td>
                       <div>  
-                        <button class="btn btn-success btn-sm" >讀取</button>
-                        <button class="btn btn-warning btn-sm" >更新</button>
+                        <button class="btn btn-warning btn-sm" @click="EditStaionData(item,index)">更新</button>
                         <button class="btn btn-danger btn-sm" @click="DeleteStaionData(item,index)">刪除</button>
                       </div>      
                     </td>
                   </tr>
                 </tbody>
               </table>
+              <div v-else>無資料</div>
             </div>
         </div>
         <div>
   
         <b-modal ref="dashtable" hide-footer title="輸入資料">
             <div class="d-block">
-                <form v-on:submit.prevent="Create">
+                <form v-on:submit.prevent="SubmitDashtable">
                     <div class="form-group">
                         <label for="AAA">輸入AAA</label>
                         <input type="text" v-model="stationData.name" class="form-control" id="AAA" placeholder="輸入AAA">
@@ -51,8 +51,9 @@
                 </form>
                 <form>
                     <div class="form-group">
-                        <div v-if="stationData.image.name">
-                            <img src="" ref="NewimageDisplay" alt="" class="NewimagePreview">
+                        <div v-if="stationData.image">
+                            <img :src="`${$store.state.serverPath}/storage/${stationData.image}`" 
+                             ref="NewimageDisplay" alt="" class="NewimagePreview">
                         </div>
                         <label for="image">選擇圖片</label>
                         <input type="file" v-on:change="attachImage" ref="Newimage" class="form-control" id="image">
@@ -62,12 +63,13 @@
                 <hr>
                 <div class="text-right">
                     <button type="button" class="btn btn-default" v-on:click="HideDashTable">取消</button>
-                <button type="submit" class="btn btn-primary" v-on:click="Create">
+                <button type="submit" class="btn btn-primary" v-on:click="SubmitDashtable">
                     <span class="fa fa-check">輸入</span>
                 </button>
                 </div>
             </div>
         </b-modal>
+
         <FlashMessage :position="'right top'"></FlashMessage>
         </div>
     </div>
@@ -85,6 +87,8 @@ export default {
         device:"",
         image:"",
     },
+    edit:null,
+    index:null,
     error:{}
     }
   },
@@ -114,9 +118,17 @@ export default {
             }
           }
         },
+        EditStaionData(item,index){
+          this.stationData = {...item};
+          this.$refs.dashtable.show()
+          this.edit =item.id;
+          this.index = index
+        },
         attachImage(){
             this.stationData.image = this.$refs.Newimage.files[0];
             let reader = new FileReader();
+
+
             reader.addEventListener('load',function(){
                 this.$refs.NewimageDisplay.src = reader.result;
             }.bind(this,false))
@@ -132,15 +144,30 @@ export default {
         },
         ShowDashTable(){
             this.$refs.dashtable.show()
+            this.stationData={
+                name:"",
+                device:"",
+                image:"",
+            }
         },
-        Create: async function(){
+        SubmitDashtable: async function(){
             let formdata = new FormData();
             formdata.append('name',this.stationData.name);
             formdata.append('device',this.stationData.device);
             formdata.append('image',this.stationData.image);
             try {
+              console.log(this.stationData)
+              if(this.edit ===null){
                 const res = await stationData_serveice.createStationData(formdata);
                 this.stationlist.unshift(res.data);
+              }else{
+                formdata.append('_method','put');
+                const res = await stationData_serveice.UpdataStationData(this.stationData.id,formdata);
+                this.edit =null;
+                
+                //this.stationData.image = `${res.data.image}`
+              }
+                
                 this.HideDashTable();
                 this.flashMessage.success({
                 message: '成功輸入!',
@@ -155,7 +182,6 @@ export default {
             } catch (error) {
                 switch (error.response.status) {
                     case 422:
-                        this.HideDashTable();
                         this.error = error.response.data.errors
                         break;               
                     default:

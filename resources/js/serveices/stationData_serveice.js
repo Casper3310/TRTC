@@ -12,3 +12,8 @@ export function LoadStationData() {
 export function DeleteStaionData(id) {
     return http().delete(`/Station/${id}`);
 }
+
+export function UpdataStationData(id, data) {
+    return http().post(`/Station/${id}`, data);
+}
+

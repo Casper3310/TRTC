@@ -1,0 +1,35 @@
+diff a/app/Http/Controllers/StationController.php b/app/Http/Controllers/StationController.php	(rejected hunks)
+@@ -85,9 +85,30 @@
+      * @param  \App\Station  $station
+      * @return \Illuminate\Http\Response
+      */
+-    public function update(Request $request, Station $station)
+-    {
+-        //
++    public function update( Request $request, $id)
++    {  
++        $request->validate([
++            'name' => 'required|min:3',
++            'device' => 'required|min:3'
++        ]);
++        $station = Station::find($id);
++        $station->name = $request->name;
++        $station->device = $request->device;
++        $file = $request->file('image');
++        if($file){
++            $request->validate([
++                'image' => 'image|mimes:jpeg,png,jpg'
++            ]);
++            Storage::delete($station->image);
++            $path = $request->file('image')->store('station_image');
++            $station->image = $path;
++        }
++        if($station->save()){
++            return response()->json($station, 200);
++        }else{
++            return response()->json($station, 500);
++        };
++        
+     }
+ 
+     /**

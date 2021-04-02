@@ -119,7 +119,7 @@ export default {
           }
         },
         EditStaionData(item,index){
-          this.stationData = {...item};
+          this.stationData = item;
           this.$refs.dashtable.show()
           this.edit =item.id;
           this.index = index
@@ -127,8 +127,6 @@ export default {
         attachImage(){
             this.stationData.image = this.$refs.Newimage.files[0];
             let reader = new FileReader();
-
-
             reader.addEventListener('load',function(){
                 this.$refs.NewimageDisplay.src = reader.result;
             }.bind(this,false))
@@ -137,7 +135,6 @@ export default {
             //    this.$refs.NewimageDisplay.src = reader.result;
             //}))
             reader.readAsDataURL(this.stationData.image);
-            
         },
         HideDashTable(){
             this.$refs.dashtable.hide()
@@ -156,7 +153,6 @@ export default {
             formdata.append('device',this.stationData.device);
             formdata.append('image',this.stationData.image);
             try {
-              console.log(this.stationData)
               if(this.edit ===null){
                 const res = await stationData_serveice.createStationData(formdata);
                 this.stationlist.unshift(res.data);
@@ -164,8 +160,7 @@ export default {
                 formdata.append('_method','put');
                 const res = await stationData_serveice.UpdataStationData(this.stationData.id,formdata);
                 this.edit =null;
-                
-                //this.stationData.image = `${res.data.image}`
+                this.stationData.image = res.data.image
               }
                 
                 this.HideDashTable();

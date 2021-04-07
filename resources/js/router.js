@@ -26,12 +26,12 @@ const routes = [
         component: () => import('./components/StationButton.vue')
     },
     {
-        path: '/Y9',
+        path: '/:station',
         //name: 'home',
         component: () => import('./components/DeviceList.vue')
     },
     {
-        path: '/Y9/light',
+        path: '/:station/:device',
         //name: 'home',
         component: () => import('./components/DevicePlane.vue')
     },

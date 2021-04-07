@@ -1,22 +1,46 @@
 <template>
     <div class="">
-        <ul class="list_ul">
-          <router-link to="b1" href="#">南機廠</router-link>
+        <ul class="list_ul" >
+          <router-link to="/b1">南機廠</router-link>
           <router-link to="/Y8" >Y8秀朗橋</router-link>
           <router-link to="/Y9" >Y9景平</router-link>
-          <router-link to="Y10">Y10景安</router-link>
-          <router-link to="Y11">Y11中和</router-link>
-          <router-link to="Y12">Y12橋和</router-link>
-          <router-link to="Y13">Y13中原</router-link>
-          <router-link to="Y14">Y14板新</router-link>
-          <router-link to="Y15">Y15板橋</router-link>
-          <router-link to="Y16">Y16新埔民生</router-link>
-          <router-link to="Y17">Y17頭前庄</router-link>
-          <router-link to="Y18">Y18幸福</router-link>
-          <router-link to="Y19">Y19新北產業園區</router-link> 
+          <router-link to="/Y10">Y10景安</router-link>
+          <router-link to="/Y11">Y11中和</router-link>
+          <router-link to="/Y12">Y12橋和</router-link>
+          <router-link to="/Y13">Y13中原</router-link>
+
         </ul>
       </div>
 </template>
+<script>
+import * as CircleLine_serveice from '../serveices/CircleLine_serveice';
+
+export default {
+    data(){
+        return{
+            station_list:[]
+        }
+    },
+    mounted(){
+    this.LoadStationList();
+  
+  },
+    methods:{
+        LoadStationList:async function(){
+            try {
+                const res = await CircleLine_serveice.LoadStationList();
+                console.log(res)
+            } catch (error) {
+              console.log(error)
+                this.flashMessage.error({
+                    message: '錯誤!',
+                    time:5000
+                    });
+            }
+        }
+    }
+}
+</script>
 <style>
 .list_ul{
     display: flex;

@@ -14,7 +14,8 @@ class CirclelineStationController extends Controller
      */
     public function index()
     {
-
+        $station = Circleline_Station::orderBy('codename','ASC')-> paginate();
+        return response()->json($station, 200);
     }
 
     /**

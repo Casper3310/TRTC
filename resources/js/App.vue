@@ -5,7 +5,6 @@
       <div class="row">
         <div class="col-12">
           <SearchComponent></SearchComponent>   
-          
           <router-view>
             <StationButton></StationButton>
           </router-view> 

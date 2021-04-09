@@ -1,14 +1,7 @@
 <template>
-    <div class="">
-        <ul class="list_ul" >
-          <router-link to="/b1">南機廠</router-link>
-          <router-link to="/Y8" >Y8秀朗橋</router-link>
-          <router-link to="/Y9" >Y9景平</router-link>
-          <router-link to="/Y10">Y10景安</router-link>
-          <router-link to="/Y11">Y11中和</router-link>
-          <router-link to="/Y12">Y12橋和</router-link>
-          <router-link to="/Y13">Y13中原</router-link>
-
+    <div>
+        <ul class="list_ul">
+          <router-link v-for="(item,index) in station_list" :key="index" :to="item.codename">{{item.stations_name}}</router-link>
         </ul>
       </div>
 </template>
@@ -23,13 +16,12 @@ export default {
     },
     mounted(){
     this.LoadStationList();
-  
   },
     methods:{
         LoadStationList:async function(){
             try {
                 const res = await CircleLine_serveice.LoadStationList();
-                console.log(res)
+                this.station_list = res.data.data
             } catch (error) {
               console.log(error)
                 this.flashMessage.error({

@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import b1 from './components/view/b1.vue'
-import b2 from './components/view/b2.vue'
 
 Vue.use(VueRouter)
 
@@ -12,27 +11,16 @@ const routes = [
         component: b1,
     },
     {
-        path: '/b2',
-        name: 'b2',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import('./components/view/b2.vue')
-    },
-    {
         path: '/',
         name: 'home',
-        // route level code-splitting
         component: () => import('./components/StationButton.vue')
     },
     {
         path: '/:station',
-        //name: 'home',
         component: () => import('./components/DeviceList.vue')
     },
     {
         path: '/:station/:device',
-        //name: 'home',
         component: () => import('./components/DevicePlane.vue')
     },
 ]

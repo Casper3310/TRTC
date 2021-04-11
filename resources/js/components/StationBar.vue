@@ -1,7 +1,12 @@
 <template>
     <div>
         <ul class="list_ul">
-          <router-link v-for="(item,index) in station_list" :key="index" :to="item.codename">{{item.stations_name}}</router-link>
+            <router-link 
+                v-for="(item,index) in station_list" 
+                :key="index" 
+                :to="{ path: `/${item.codename}`}">
+                    {{item.stations_name}}
+            </router-link>
         </ul>
       </div>
 </template>
@@ -30,7 +35,7 @@ export default {
                     });
             }
         }
-    }
+    },
 }
 </script>
 <style>

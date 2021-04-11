@@ -6,17 +6,13 @@ Vue.use(VueRouter)
 
 const routes = [
     {
-        path: '/b1',
-        name: 'b1',
-        component: b1,
-    },
-    {
         path: '/',
         name: 'home',
         component: () => import('./components/StationButton.vue')
     },
     {
         path: '/:station',
+        name: "station",
         component: () => import('./components/DeviceList.vue')
     },
     {

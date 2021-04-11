@@ -4,23 +4,45 @@
         <p>選擇車站</p>
 </div>
     <div class="stationbutton">
-        <router-link class="btn btn-outline-primary btn-lg" to="b1" href="#">南機廠</router-link>
-        <router-link class="btn btn-outline-primary btn-lg" to="Y8" href="#">Y8秀朗橋</router-link>
-        <router-link class="btn btn-outline-primary btn-lg" to="Y9" href="#">Y9景平</router-link>
-        <router-link class="btn btn-outline-primary btn-lg" to="Y10" href="#">Y10景安</router-link>
-        <router-link class="btn btn-outline-primary btn-lg" to="Y11" href="#">Y11中和</router-link>
-        <router-link class="btn btn-outline-primary btn-lg" to="Y12" href="#">Y12橋和</router-link>
-        <router-link class="btn btn-outline-primary btn-lg" to="Y13" href="#">Y13中原</router-link>
-        <router-link class="btn btn-outline-primary btn-lg" to="Y14" href="#">Y14板新</router-link>
-        <router-link class="btn btn-outline-primary btn-lg" to="Y15" href="#">Y15板橋</router-link>
-        <router-link class="btn btn-outline-primary btn-lg" to="Y16" href="#">Y16新埔民生</router-link>
-        <router-link class="btn btn-outline-primary btn-lg" to="Y17" href="#">Y17頭前庄</router-link>
-        <router-link class="btn btn-outline-primary btn-lg" to="Y18" href="#">Y18幸福</router-link>
-        <router-link class="btn btn-outline-primary btn-lg" to="Y19" href="#">Y19新北產業園區</router-link>
+        <router-link 
+            v-for="(item,index) in station_list" 
+            :key="index" 
+            :to="{ path: `/${item.codename}`}"
+            class="btn btn-outline-primary btn-lg">
+            {{item.stations_name}}
+        </router-link>
     </div>
 </div>
     
 </template>
+<script>
+import * as CircleLine_serveice from '../serveices/CircleLine_serveice';
+
+export default {
+    data(){
+        return{
+            station_list:[]
+        }
+    },
+    mounted(){
+    this.LoadStationList();
+  },
+    methods:{
+        LoadStationList:async function(){
+            try {
+                const res = await CircleLine_serveice.LoadStationList();
+                this.station_list = res.data.data
+            } catch (error) {
+              console.log(error)
+                this.flashMessage.error({
+                    message: '錯誤!',
+                    time:5000
+                    });
+            }
+        }
+    },
+}
+</script>
 <style>
 p{
     text-align: center;

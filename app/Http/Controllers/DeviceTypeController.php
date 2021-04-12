@@ -14,7 +14,8 @@ class DeviceTypeController extends Controller
      */
     public function index()
     {
-        //
+        $DeviceType = DeviceType::orderBy('name','ASC')-> paginate();
+        return response()->json($DeviceType, 200);
     }
 
     /**

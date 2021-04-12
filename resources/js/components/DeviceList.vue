@@ -16,3 +16,44 @@
         </div>
     </div>
 </template>
+<script>
+import * as DeviceList_serveice from '../serveices/DeviceList_serveice';
+
+export default {
+    data(){
+        return{
+            DeviceList:[],
+            DeviceType:[]
+        }
+    },
+    mounted(){
+        this.LoadDeviceList();
+    },
+    methods:{
+        LoadDeviceList:async function(){
+            try {
+                const res = await DeviceList_serveice.LoadDeviceList();
+                this.DeviceList = res.data.data
+            } catch (error) {
+              console.log(error)
+                this.flashMessage.error({
+                    message: '錯誤!',
+                    time:5000
+                    });
+            }
+        },
+        /*LoadDeviceType:async function(){
+            try {
+                const res = await DeviceList_serveice.LoadDeviceType();
+                this.DeviceType = res.data.data
+            } catch (error) {
+              console.log(error)
+                this.flashMessage.error({
+                    message: '錯誤!',
+                    time:5000
+                    });
+            }
+        }*/
+    }
+}
+</script>

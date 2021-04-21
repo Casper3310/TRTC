@@ -48,8 +48,13 @@ class CirclelineStationController extends Controller
     public function show($circleline_Station)
     {
         $station = Circleline_Station::find($circleline_Station);
+        $station->Device_type;
+        
+        foreach ($station->Device_type as $key => $value) {
+            $station->Device_type[$key]->DeviceList;
+        };
         //return response()->json($station, 200);
-        return response($station->Device_type);
+        return response($station);
     }
 
     /**

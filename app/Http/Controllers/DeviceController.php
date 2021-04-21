@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Circleline_Station;
+use App\Device;
 use Illuminate\Http\Request;
 
-class CirclelineStationController extends Controller
+class DeviceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,7 @@ class CirclelineStationController extends Controller
      */
     public function index()
     {
-        $station = Circleline_Station::orderBy('codename','ASC')-> paginate();
-        return response()->json($station, 200);
+        //
     }
 
     /**
@@ -42,31 +41,21 @@ class CirclelineStationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Circleline_Station  $circleline_Station
+     * @param  \App\Device  $device
      * @return \Illuminate\Http\Response
      */
-    public function show($circleline_Station)
+    public function show(Device $device)
     {
-        $station = Circleline_Station::find($circleline_Station);
-        $station->Device_type;
-        
-        foreach ($station->Device_type as $key => $value) {
-            $DeviceList = $station->Device_type[$key]->DeviceList;
-            foreach ($DeviceList as $key => $value) {
-                $DeviceList[$key]->Device; 
-            }
-        };
-        //return response()->json($station, 200);
-        return response($station);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Circleline_Station  $circleline_Station
+     * @param  \App\Device  $device
      * @return \Illuminate\Http\Response
      */
-    public function edit(Circleline_Station $circleline_Station)
+    public function edit(Device $device)
     {
         //
     }
@@ -75,10 +64,10 @@ class CirclelineStationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Circleline_Station  $circleline_Station
+     * @param  \App\Device  $device
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Circleline_Station $circleline_Station)
+    public function update(Request $request, Device $device)
     {
         //
     }
@@ -86,10 +75,10 @@ class CirclelineStationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Circleline_Station  $circleline_Station
+     * @param  \App\Device  $device
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Circleline_Station $circleline_Station)
+    public function destroy(Device $device)
     {
         //
     }

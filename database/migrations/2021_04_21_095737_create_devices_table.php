@@ -19,12 +19,24 @@ class CreateDevicesTable extends Migration
             $table->string('place');
             $table->text('image');
             $table->unsignedBigInteger('device_lists_id');
+            $table->unsignedBigInteger('device_types_id');
+            $table->unsignedBigInteger('Circleline_Station_id');
             $table->timestamps();
 
             $table->foreign('device_lists_id')
             ->references('id')
             ->on('device_lists')
             ->onDelete('cascade');
+
+            $table->foreign('device_types_id')
+            ->references('id')
+            ->on('device_types')
+            ->onDelete('cascade');
+
+            $table->foreign('Circleline_Station_id')
+                    ->references('id')
+                    ->on('circleline__stations')
+                    ->onDelete('cascade');
         });
     }
 

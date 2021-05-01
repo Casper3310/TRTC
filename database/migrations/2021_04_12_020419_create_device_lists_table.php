@@ -16,13 +16,7 @@ class CreateDeviceListsTable extends Migration
         Schema::create('device_lists', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('device_types_id');
             $table->timestamps();
-
-            $table->foreign('device_types_id')
-            ->references('id')
-            ->on('device_types')
-            ->onDelete('cascade');
         });
     }
 

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\DeviceList;
+use App\light;
 use Illuminate\Http\Request;
 
-class DeviceListController extends Controller
+class LightController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,7 @@ class DeviceListController extends Controller
      */
     public function index()
     {
-        $DeviceList = DeviceList::all();
-        return response()->json($DeviceList, 200);
+        //
     }
 
     /**
@@ -42,22 +41,22 @@ class DeviceListController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\DeviceList  $deviceList
+     * @param  \App\light  $light
      * @return \Illuminate\Http\Response
      */
     public function show($station_id)
     {
-        $DeviceList = DeviceList::where('Circleline_Station_id','=',$station_id)->get();
-        return response()->json($DeviceList, 200);
+        $light = light::where('Circleline_Station_id','=',$station_id)->get();
+        return response()->json(["data"=>$light,"message"=>"成功"], 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\DeviceList  $deviceList
+     * @param  \App\light  $light
      * @return \Illuminate\Http\Response
      */
-    public function edit(DeviceList $deviceList)
+    public function edit(light $light)
     {
         //
     }
@@ -66,10 +65,10 @@ class DeviceListController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\DeviceList  $deviceList
+     * @param  \App\light  $light
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DeviceList $deviceList)
+    public function update(Request $request, light $light)
     {
         //
     }
@@ -77,10 +76,10 @@ class DeviceListController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\DeviceList  $deviceList
+     * @param  \App\light  $light
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DeviceList $deviceList)
+    public function destroy(light $light)
     {
         //
     }

@@ -14,7 +14,7 @@ class DeviceTypeController extends Controller
      */
     public function index()
     {
-        $DeviceType = DeviceType::orderBy('name','ASC')-> paginate();
+        $DeviceType = Device_Type::all();
         return response()->json($DeviceType, 200);
     }
 
@@ -45,9 +45,10 @@ class DeviceTypeController extends Controller
      * @param  \App\Device_type  $device_type
      * @return \Illuminate\Http\Response
      */
-    public function show(Device_type $device_type)
+    public function show($station_id)
     {
-        //
+        $DeviceType = Device_Type::where('Circleline_Station_id','=',$station_id)->get();
+        return response()->json($DeviceType, 200);
     }
 
     /**

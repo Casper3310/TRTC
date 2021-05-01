@@ -15,4 +15,8 @@ class Device_type extends Model
         return $this->hasMany(Device::class,'device_types_id');
     }
 
+    public function Circleline_Station(){
+        return $this->belongsTo(Circleline_Station::class,'Circleline_Station_id');
+    }
+
 }

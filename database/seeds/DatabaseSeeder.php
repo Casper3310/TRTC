@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
         $this->call(circleline_station::class);
         $this->call(device_types ::class);
         $this->call(device_lists ::class);
+        $this->call(device ::class);
 
     }
 }

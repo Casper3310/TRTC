@@ -11,7 +11,7 @@ class device extends Seeder
      */
     public function run()
     {
-        for ($i=1; $i <=14 ; $i++) { 
+        /*for ($i=1; $i <=14 ; $i++) { 
             for ($j=1; $j <=2 ; $j++) { 
                 if ($j==1) {
                     for ($k=1; $k <=4 ; $k++) { 
@@ -35,7 +35,6 @@ class device extends Seeder
                 }
                 
             }
-        }
-        
+        }*/
     }
 }

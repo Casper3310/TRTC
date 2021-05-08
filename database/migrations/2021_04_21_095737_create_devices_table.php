@@ -18,6 +18,9 @@ class CreateDevicesTable extends Migration
             $table->unsignedBigInteger('Circleline_Station_id');
             $table->unsignedBigInteger('device_types_id');
             $table->unsignedBigInteger('device_lists_id');
+            $table->string('name');
+            $table->string('place');
+            $table->text('image');
             $table->timestamps();
 
             $table->foreign('device_lists_id')

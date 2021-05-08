@@ -23,4 +23,4 @@ Route::resource('Circleline_Station', 'CirclelineStationController');
 Route::resource('DeviceList', 'DeviceListController');
 Route::resource('DeviceType', 'DeviceTypeController');
 Route::resource('Device', 'DeviceController');
-Route::resource('light', 'lightController');
+Route::get('Device/{station}/{list}', 'DeviceController@Device');

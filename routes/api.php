@@ -24,3 +24,9 @@ Route::resource('DeviceList', 'DeviceListController');
 Route::resource('DeviceType', 'DeviceTypeController');
 Route::resource('Device', 'DeviceController');
 Route::get('Device/{station}/{list}', 'DeviceController@Device');
+
+Route::group(['prefix' => 'auth' ],function () {
+    Route::post('register', 'AuthController@register');
+    Route::post('login', 'AuthController@login');
+
+});

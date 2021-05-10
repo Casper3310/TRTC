@@ -15,6 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(device_types ::class);
         $this->call(device_lists ::class);
         $this->call(device ::class);
-
+        $this->call(AdminSeeder::class);
     }
 }

@@ -28,5 +28,20 @@ Route::get('Device/{station}/{list}', 'DeviceController@Device');
 Route::group(['prefix' => 'auth' ],function () {
     Route::post('register', 'AuthController@register');
     Route::post('login', 'AuthController@login');
+    Route::group(['middleware' => 'auth:api' ],function () {
+        Route::get('logout', 'AuthController@logout');
+    });
 
+});
+
+Route::group(['prefix' => 'uesr' ],function () {
+    Route::group(['middleware' => 'auth:api' ],function () {
+        Route::post('create_water', function () {
+            return response()->json(['message' => '水電操作', 'statu' => '200'], 200);
+        })->middleware('scope:manipulate_water');
+
+        Route::post('create_fire', function () {
+            return response()->json(['message' => '消防操作', 'statu' => '200'], 200);
+        })->middleware('scope:manipulate_fire,manipulate_water');
+    });
 });

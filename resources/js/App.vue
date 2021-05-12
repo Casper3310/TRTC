@@ -1,5 +1,6 @@
 <template>
     <div>
+      <LoginBar></LoginBar>
         <router-link class="title alert alert-primary" to="/">水電資料</router-link>
         <StationBar></StationBar>
       <div class="row">
@@ -18,13 +19,16 @@ import SearchComponent from './components/SearchComponent.vue'
 import DevicePlane from './components/DevicePlane.vue'
 import StationButton from './components/StationButton.vue'
 import DeviceList from './components/DeviceList.vue'
+import LoginBar from './components/LoginBar.vue'
+
 export default {
     components:{
         StationBar,
         SearchComponent,
         DevicePlane,
         StationButton,
-        DeviceList
+        DeviceList,
+        LoginBar
     }
 }
 </script>

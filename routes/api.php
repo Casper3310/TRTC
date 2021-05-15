@@ -20,10 +20,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::resource('Station', 'StationController');
 Route::resource('Circleline_Station', 'CirclelineStationController');
-Route::resource('DeviceList', 'DeviceListController');
 Route::resource('DeviceType', 'DeviceTypeController');
 Route::resource('Device', 'DeviceController');
 Route::get('Device/{station}/{list}', 'DeviceController@Device');
+
+
 
 Route::group(['prefix' => 'auth' ],function () {
     Route::post('register', 'AuthController@register');

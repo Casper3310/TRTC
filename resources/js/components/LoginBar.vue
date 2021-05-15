@@ -80,7 +80,7 @@
                                 <input
                                     class="form-control"
                                     type="password"
-                                    placeholder="輸入password"
+                                    placeholder="輸入密碼"
                                     id="Login_password"
                                     v-model="Login.password"
                                 />

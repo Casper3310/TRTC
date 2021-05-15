@@ -45,9 +45,12 @@ class DeviceTypeController extends Controller
      * @param  \App\Device_type  $device_type
      * @return \Illuminate\Http\Response
      */
-    public function show($station_id)
+    public function show(Request $request)
     {
-        $DeviceType = Device_Type::where('Circleline_Station_id','=',$station_id)->get();
+        $DeviceType = Device_Type::find($request);
+        return $DeviceType;
+
+        $DeviceType = Device_Type::where('Circleline_Station_id','=',$request->station_id)->get();
         return response()->json($DeviceType, 200);
     }
 

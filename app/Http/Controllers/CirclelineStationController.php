@@ -45,19 +45,11 @@ class CirclelineStationController extends Controller
      * @param  \App\Circleline_Station  $circleline_Station
      * @return \Illuminate\Http\Response
      */
-    public function show($circleline_Station)
+    public function show(Request $circleline_Station)
     {
-        $station = Circleline_Station::find($circleline_Station);
+        $station = Circleline_Station::find($circleline_Station->station_id);
         $station->Device_type;
-        
-        foreach ($station->Device_type as $key => $value) {
-            $DeviceList = $station->Device_type[$key]->DeviceList;
-            foreach ($DeviceList as $key => $value) {
-                $DeviceList[$key]->Device; 
-            }
-        };
-        //return response()->json($station, 200);
-        return response($station);
+        return response()->json($station->Device_type, 200);
     }
 
     /**
@@ -92,5 +84,19 @@ class CirclelineStationController extends Controller
     public function destroy(Circleline_Station $circleline_Station)
     {
         //
+    }
+
+    public function GetDeviceType(Request $circleline_Station)
+    {
+        $station = Circleline_Station::find($circleline_Station);
+        $station->Device_type;
+        foreach ($station->Device_type as $key => $value) {
+            $DeviceList = $station->Device_type[$key]->DeviceList;
+            foreach ($DeviceList as $key => $value) {
+                $DeviceList[$key]->Device; 
+            }
+        };
+        return response()->json($station, 200);
+
     }
 }

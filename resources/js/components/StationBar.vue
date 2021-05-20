@@ -2,12 +2,16 @@
     <div>
         <ul class="list_ul">
             <router-link
-                v-for="(item, index) in station_list"
+                v-for="(item, index) in StationList.data"
                 :key="index"
                 :to="{ path: `/${item.codename}` }"
-                @click="changeindex(index)"
             >
-                {{ item.stations_name }}
+                <button
+                    class="btn btn-warning"
+                    @click="ChangeStationID(item.id)"
+                >
+                    {{ item.stations_name }}
+                </button>
             </router-link>
         </ul>
     </div>
@@ -31,24 +35,10 @@ export default {
     },
     mounted() {
         this.$store.dispatch("Loadstation");
-        this.LoadStationList();
     },
     methods: {
-        LoadStationList: async function() {
-            try {
-                const res = await CircleLine_serveice.LoadStationList();
-                this.station_list = res.data.data;
-            } catch (error) {
-                console.log(error);
-                this.flashMessage.error({
-                    message: "錯誤!",
-                    time: 5000
-                });
-            }
-        },
-        changeindex(index) {
-            console.log("index");
-            console.log(index);
+        ChangeStationID(StationID) {
+            this.$store.commit("SetStationID", StationID);
         }
     }
 };

@@ -47,33 +47,33 @@
 import * as CircleLine_serveice from "../serveices/CircleLine_serveice";
 
 export default {
-    data() {
-        return { DeviceList: [] };
-    },
-    mounted() {
-        this.LoadDeviceList();
-    },
+    mounted() {},
     computed: {
+        DeviceList: {
+            get() {
+                return this.$store.state;
+            },
+            set(val) {}
+        },
         water() {
             let SortType = [];
+
             this.DeviceList.forEach(function(item) {
-                if (!SortType.length) {
-                    SortType.push(item.type);
-                }
-                SortType.forEach(function(item2) {
-                    if (item.type != item2) {
-                        SortType.push(item.type);
-                    }
-                });
+                SortType.push(item.type);
             });
-            SortType.pop();
+            console.log(SortType);
             return SortType;
+        },
+        CurrentStation() {
+            return this.$store.state.StationID;
         }
     },
     methods: {
         LoadDeviceList: async function() {
             try {
-                const res = await CircleLine_serveice.LoadDeviceList(1);
+                const res = await CircleLine_serveice.LoadDeviceList(
+                    this.$store.state.StationID
+                );
                 this.DeviceList = res.data;
             } catch (error) {
                 console.log(error);
@@ -82,6 +82,11 @@ export default {
                     time: 5000
                 });
             }
+        }
+    },
+    watch: {
+        CurrentStation() {
+            this.LoadDeviceList();
         }
     }
 };

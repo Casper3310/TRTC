@@ -2,43 +2,40 @@
     <div>
         <ul class="list_ul">
             <router-link
-                v-for="(item, index) in StationList.data"
+                v-for="(item, index) in StationList"
                 :key="index"
-                :to="{ path: `/${item.codename}` }"
+                :to="{ path: `/station/${item.id}` }"
             >
-                <button
-                    class="btn btn-warning"
-                    @click="ChangeStationID(item.id)"
-                >
-                    {{ item.stations_name }}
-                </button>
+                {{ item.stations_name }}
             </router-link>
         </ul>
     </div>
 </template>
 <script>
-import * as CircleLine_serveice from "../serveices/CircleLine_serveice";
+import * as stationData_serveice from "../serveices/stationData_serveice";
 
 export default {
     data() {
         return {
-            station_list: []
+            StationList: []
         };
     },
-    computed: {
-        StationList() {
-            return this.$store.state.station;
-        },
-        stationindex() {
-            return this;
-        }
-    },
+    computed: {},
     mounted() {
-        this.$store.dispatch("Loadstation");
+        this.LoadStationList();
     },
     methods: {
-        ChangeStationID(StationID) {
-            this.$store.commit("SetStationID", StationID);
+        LoadStationList: async function() {
+            try {
+                const res = await stationData_serveice.LoadStationList();
+                this.StationList = res.data.data;
+            } catch (error) {
+                console.log(error);
+                this.flashMessage.error({
+                    message: "錯誤!",
+                    time: 5000
+                });
+            }
         }
     }
 };

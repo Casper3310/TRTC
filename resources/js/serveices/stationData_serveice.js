@@ -16,3 +16,10 @@ export function UpdataStationData(id, data) {
     return http().post(`/Station/${id}`, data);
 }
 
+export function LoadStationList() {
+    return http().get('Circleline_Station')
+}
+
+export function LoadDeviceList(stationID) {
+    return http().get(`Circleline_Station/${stationID}`)
+}

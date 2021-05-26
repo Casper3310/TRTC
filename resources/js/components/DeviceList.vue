@@ -4,75 +4,65 @@
         <hr />
         <div class="stationbutton">
             <router-link
+                v-for="(item, index) in water"
+                :key="index"
                 class="btn btn-outline-primary btn-lg"
                 to="light"
                 append
-                >照明</router-link
-            >
-            <router-link
-                class="btn btn-outline-primary btn-lg"
-                to="socket"
-                append
-                >插座</router-link
-            >
-            <router-link class="btn btn-outline-primary btn-lg" to="pump" append
-                >泵浦</router-link
-            >
-            <router-link
-                class="btn btn-outline-primary btn-lg"
-                to="earth"
-                append
-                >接地箱</router-link
+                >{{ item.device }}</router-link
             >
         </div>
         <p>消防設備</p>
         <hr />
         <div class="stationbutton">
             <router-link
+                v-for="(item, index) in fire"
+                :key="index"
                 class="btn btn-outline-primary btn-lg"
                 to="smoker"
                 append
-                >偵煙器</router-link
-            >
-            <router-link
-                class="btn btn-outline-primary btn-lg"
-                to="water"
-                append
-                >水系統</router-link
+                >{{ item.device }}</router-link
             >
         </div>
     </div>
 </template>
 <script>
-import * as CircleLine_serveice from "../serveices/CircleLine_serveice";
+import * as stationData_serveice from "../serveices/stationData_serveice";
 
 export default {
-    mounted() {},
+    data() {
+        return {
+            DeviceList: [],
+            station: null
+        };
+    },
+    mounted() {
+        this.LoadDeviceList();
+    },
     computed: {
-        DeviceList: {
-            get() {
-                return this.$store.state;
-            },
-            set(val) {}
-        },
-        water() {
+        DeviceType() {
             let SortType = [];
-
-            this.DeviceList.forEach(function(item) {
-                SortType.push(item.type);
-            });
-            console.log(SortType);
+            let DeviceListlength = this.DeviceList.length;
+            for (let i = 0; i < DeviceListlength; i++) {
+                if (!SortType.includes(this.DeviceList[i].type)) {
+                    SortType.push(this.DeviceList[i].type);
+                }
+            }
             return SortType;
         },
-        CurrentStation() {
-            return this.$store.state.StationID;
+        water() {
+            return this.DeviceList.filter(item => item.type == "水電");
+        },
+        fire() {
+            return this.DeviceList.filter(item => item.type == "消防");
         }
     },
     methods: {
         LoadDeviceList: async function() {
             try {
-                const res = await CircleLine_serveice.LoadDeviceList(
-                    this.$store.state.StationID
+                let stationID = parseInt(this.$route.params.stationID);
+                const res = await stationData_serveice.LoadDeviceList(
+                    stationID
                 );
                 this.DeviceList = res.data;
             } catch (error) {
@@ -85,7 +75,7 @@ export default {
         }
     },
     watch: {
-        CurrentStation() {
+        $route() {
             this.LoadDeviceList();
         }
     }

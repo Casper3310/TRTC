@@ -5,14 +5,7 @@
             >水電資料</router-link
         >
         <StationBar></StationBar>
-        <div class="row">
-            <div class="col-12">
-                <SearchComponent></SearchComponent>
-                <router-view>
-                    <StationButton></StationButton>
-                </router-view>
-            </div>
-        </div>
+        <router-view></router-view>
     </div>
 </template>
 <script>

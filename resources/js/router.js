@@ -11,14 +11,15 @@ const routes = [
         component: () => import('./components/StationButton.vue')
     },
     {
-        path: '/:station',
+        path: '/station/:stationID',
         name: "station",
-        component: () => import('./components/DeviceList.vue')
+        component: () => import('./components/DeviceList.vue'),
+        children: [{
+            path: 'device/:deviceID',
+            component: () => import('./components/DevicePlane.vue')
+        },]
     },
-    {
-        path: '/:station/:device',
-        component: () => import('./components/DevicePlane.vue')
-    },
+
 ]
 
 const router = new VueRouter({

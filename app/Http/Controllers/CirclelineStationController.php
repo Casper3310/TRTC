@@ -45,9 +45,9 @@ class CirclelineStationController extends Controller
      * @param  \App\Circleline_Station  $circleline_Station
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $circleline_Station)
-    {
-        $station = Circleline_Station::find($circleline_Station->station_id);
+    public function show($circleline_Station)
+    {   
+        $station = Circleline_Station::find($circleline_Station);
         $station->Device_type;
         return response()->json($station->Device_type, 200);
     }

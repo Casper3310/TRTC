@@ -16,8 +16,7 @@ export default new Vuex.Store({
         apiURL: 'http://127.0.0.1:8000/api',
         serverPath: 'http://127.0.0.1:8000',
         station: [],
-        StationID: 1,
-        DeviceList: []
+        StationID: 0,
     },
     mutations: {
         SetStaion(state, station) {

@@ -1,29 +1,38 @@
 <template>
     <div>
-        <p>水電設備</p>
-        <hr />
-        <div class="stationbutton">
-            <router-link
-                v-for="(item, index) in water"
-                :key="index"
-                class="btn btn-outline-primary btn-lg"
-                to="light"
-                append
-                >{{ item.device }}</router-link
-            >
+        <div v-if="water.length">
+            <p>水電設備</p>
+            <hr />
+            <div class="stationbutton">
+                <router-link
+                    v-for="(item, index) in water"
+                    :key="index"
+                    class="btn btn-outline-primary btn-lg"
+                    :to="{
+                        name: 'device',
+                        params: { deviceID: item.pivot.device_types_id }
+                    }"
+                    >{{ item.device }}</router-link
+                >
+            </div>
         </div>
-        <p>消防設備</p>
-        <hr />
-        <div class="stationbutton">
-            <router-link
-                v-for="(item, index) in fire"
-                :key="index"
-                class="btn btn-outline-primary btn-lg"
-                to="smoker"
-                append
-                >{{ item.device }}</router-link
-            >
+        <div v-if="fire.length">
+            <p>消防設備</p>
+            <hr />
+            <div class="stationbutton">
+                <router-link
+                    v-for="(item, index) in fire"
+                    :key="index"
+                    class="btn btn-outline-primary btn-lg"
+                    :to="{
+                        name: 'device',
+                        params: { deviceID: item.pivot.device_types_id }
+                    }"
+                    >{{ item.device }}</router-link
+                >
+            </div>
         </div>
+        <router-view></router-view>
     </div>
 </template>
 <script>

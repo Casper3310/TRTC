@@ -5,6 +5,10 @@ import b1 from './components/view/b1.vue'
 Vue.use(VueRouter)
 
 const routes = [
+    /*{
+        path: '*',
+        redirect: '/'
+    },*/
     {
         path: '/',
         name: 'home',
@@ -16,6 +20,7 @@ const routes = [
         component: () => import('./components/DeviceList.vue'),
         children: [{
             path: 'device/:deviceID',
+            name: "device",
             component: () => import('./components/DevicePlane.vue')
         },]
     },

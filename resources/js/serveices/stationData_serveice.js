@@ -21,5 +21,5 @@ export function LoadStationList() {
 }
 
 export function LoadDeviceList(stationID) {
-    return http().get(`Circleline_Station/${stationID}`)
+    return http().get('Circleline_Station/stationID', { params: { id: stationID } })
 }

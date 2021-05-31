@@ -5,14 +5,11 @@
             >水電資料</router-link
         >
         <StationBar></StationBar>
-        <router-view></router-view>
     </div>
 </template>
 <script>
 import StationBar from "./components/StationBar.vue";
 import SearchComponent from "./components/SearchComponent.vue";
-import DevicePlane from "./components/DevicePlane.vue";
-import StationButton from "./components/StationButton.vue";
 import DeviceList from "./components/DeviceList.vue";
 import LoginBar from "./components/LoginBar.vue";
 
@@ -20,8 +17,6 @@ export default {
     components: {
         StationBar,
         SearchComponent,
-        DevicePlane,
-        StationButton,
         DeviceList,
         LoginBar
     }

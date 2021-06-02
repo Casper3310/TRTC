@@ -94,28 +94,97 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'station',
+  name: "station",
   data: function data() {
     return {
-      stationlist: [],
-      stationData: {
+      DeviceList: [],
+      DevicenData: {
         name: "",
-        device: "",
+        place: "",
         image: ""
       },
-      edit: null,
+      edit: false,
       index: null,
       error: {}
     };
   },
+  computed: {
+    selectData: function selectData() {
+      return {
+        deviceID: parseInt(this.$route.params.deviceID),
+        stationID: parseInt(this.$route.params.stationID)
+      };
+    }
+  },
   mounted: function mounted() {
-    this.LoadStationData();
+    this.LoadDeviceData();
   },
   methods: {
-    LoadStationData: function () {
-      var _LoadStationData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+    LoadDeviceData: function () {
+      var _LoadDeviceData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
@@ -123,11 +192,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return _serveices_stationData_serveice__WEBPACK_IMPORTED_MODULE_1__["LoadStationData"]();
+                return _serveices_stationData_serveice__WEBPACK_IMPORTED_MODULE_1__["LoadDeviceData"](this.selectData);
 
               case 3:
                 res = _context.sent;
-                this.stationlist = res.data.data;
+                this.DeviceList = res.data.data;
                 _context.next = 11;
                 break;
 
@@ -136,7 +205,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.t0 = _context["catch"](0);
                 console.log(_context.t0);
                 this.flashMessage.error({
-                  message: '錯誤!',
+                  message: "錯誤!",
                   time: 5000
                 });
 
@@ -148,77 +217,80 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee, this, [[0, 7]]);
       }));
 
-      function LoadStationData() {
-        return _LoadStationData.apply(this, arguments);
+      function LoadDeviceData() {
+        return _LoadDeviceData.apply(this, arguments);
       }
 
-      return LoadStationData;
+      return LoadDeviceData;
     }(),
-    DeleteStaionData: function () {
-      var _DeleteStaionData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(item, index) {
+    DeleteDeviceData: function () {
+      var _DeleteDeviceData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(item, index) {
+        var res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 if (!window.confirm("\u4F60\u78BA\u5B9A\u522A\u9664".concat(item.name))) {
-                  _context2.next = 10;
+                  _context2.next = 11;
                   break;
                 }
 
                 _context2.prev = 1;
                 _context2.next = 4;
-                return _serveices_stationData_serveice__WEBPACK_IMPORTED_MODULE_1__["DeleteStaionData"](item.id);
+                return _serveices_stationData_serveice__WEBPACK_IMPORTED_MODULE_1__["DeleteDeviceData"](item.id);
 
               case 4:
-                this.stationlist.splice(index, 1);
-                _context2.next = 10;
+                res = _context2.sent;
+                this.DeviceList.splice(index, 1);
+                _context2.next = 11;
                 break;
 
-              case 7:
-                _context2.prev = 7;
+              case 8:
+                _context2.prev = 8;
                 _context2.t0 = _context2["catch"](1);
                 console.log(_context2.t0);
 
-              case 10:
+              case 11:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[1, 7]]);
+        }, _callee2, this, [[1, 8]]);
       }));
 
-      function DeleteStaionData(_x, _x2) {
-        return _DeleteStaionData.apply(this, arguments);
+      function DeleteDeviceData(_x, _x2) {
+        return _DeleteDeviceData.apply(this, arguments);
       }
 
-      return DeleteStaionData;
+      return DeleteDeviceData;
     }(),
-    EditStaionData: function EditStaionData(item, index) {
-      this.stationData = item;
+    EditDeviceData: function EditDeviceData(item, index) {
+      this.DevicenData = item;
       this.$refs.dashtable.show();
-      this.edit = item.id;
+      this.edit = true;
       this.index = index;
     },
     attachImage: function attachImage() {
-      this.stationData.image = this.$refs.Newimage.files[0];
+      this.DevicenData.image = this.$refs.Newimage.files[0];
       var reader = new FileReader();
-      reader.addEventListener('load', function () {
+      reader.addEventListener("load", function () {
         this.$refs.NewimageDisplay.src = reader.result;
       }.bind(this, false)); //使用箭頭解決this
       //reader.addEventListener('load',(()=>{
       //    this.$refs.NewimageDisplay.src = reader.result;
       //}))
 
-      reader.readAsDataURL(this.stationData.image);
+      reader.readAsDataURL(this.DevicenData.image);
     },
     HideDashTable: function HideDashTable() {
       this.$refs.dashtable.hide();
     },
-    ShowDashTable: function ShowDashTable() {
+    CreateDevice: function CreateDevice() {
       this.$refs.dashtable.show();
-      this.stationData = {
+      this.edit = false;
+      this.DevicenData = {
         name: "",
-        device: "",
+        place: "",
         image: ""
       };
     },
@@ -231,73 +303,80 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context3.prev = _context3.next) {
               case 0:
                 formdata = new FormData();
-                formdata.append('name', this.stationData.name);
-                formdata.append('device', this.stationData.device);
-                formdata.append('image', this.stationData.image);
-                _context3.prev = 4;
+                formdata.append("Circleline_Station_id", this.selectData.stationID);
+                formdata.append("device_types_id", this.selectData.deviceID);
+                formdata.append("name", this.DevicenData.name);
+                formdata.append("devicePlace", this.DevicenData.place);
 
-                if (!(this.edit === null)) {
-                  _context3.next = 12;
+                if (this.DevicenData.image) {
+                  formdata.append("image", this.DevicenData.image);
+                }
+
+                _context3.prev = 6;
+
+                if (!this.edit) {
+                  _context3.next = 17;
                   break;
                 }
 
-                _context3.next = 8;
-                return _serveices_stationData_serveice__WEBPACK_IMPORTED_MODULE_1__["createStationData"](formdata);
+                formdata.append("_method", "put");
+                _context3.next = 11;
+                return _serveices_stationData_serveice__WEBPACK_IMPORTED_MODULE_1__["UpdataDeviceData"](this.DevicenData.id, formdata);
 
-              case 8:
+              case 11:
                 res = _context3.sent;
-                this.stationlist.unshift(res.data);
-                _context3.next = 18;
+                console.log(res);
+                this.edit = false;
+                this.DevicenData.image = res.data.image;
+                _context3.next = 21;
                 break;
 
-              case 12:
-                formdata.append('_method', 'put');
-                _context3.next = 15;
-                return _serveices_stationData_serveice__WEBPACK_IMPORTED_MODULE_1__["UpdataStationData"](this.stationData.id, formdata);
+              case 17:
+                _context3.next = 19;
+                return _serveices_stationData_serveice__WEBPACK_IMPORTED_MODULE_1__["createDeviceData"](formdata);
 
-              case 15:
+              case 19:
                 _res = _context3.sent;
-                this.edit = null;
-                this.stationData.image = _res.data.image;
+                this.DeviceList.unshift(_res.data);
 
-              case 18:
+              case 21:
                 this.HideDashTable();
                 this.flashMessage.success({
-                  message: '成功輸入!',
+                  message: "成功輸入!",
                   time: 5000
                 });
                 this.stationData = {
                   name: "",
-                  device: "",
+                  place: "",
                   image: ""
                 };
-                _context3.next = 32;
+                _context3.next = 35;
                 break;
 
-              case 23:
-                _context3.prev = 23;
-                _context3.t0 = _context3["catch"](4);
+              case 26:
+                _context3.prev = 26;
+                _context3.t0 = _context3["catch"](6);
                 _context3.t1 = _context3.t0.response.status;
-                _context3.next = _context3.t1 === 422 ? 28 : 30;
+                _context3.next = _context3.t1 === 422 ? 31 : 33;
                 break;
 
-              case 28:
+              case 31:
                 this.error = _context3.t0.response.data.errors;
-                return _context3.abrupt("break", 32);
+                return _context3.abrupt("break", 35);
 
-              case 30:
+              case 33:
                 this.flashMessage.error({
-                  message: '錯誤!',
+                  message: "錯誤!",
                   time: 5000
                 });
-                return _context3.abrupt("break", 32);
+                return _context3.abrupt("break", 35);
 
-              case 32:
+              case 35:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, this, [[4, 23]]);
+        }, _callee3, this, [[6, 26]]);
       }));
 
       function SubmitDashtable() {
@@ -306,6 +385,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return SubmitDashtable;
     }()
+  },
+  watch: {
+    $route: function $route() {
+      this.LoadDeviceData();
+    }
   }
 });
 
@@ -323,7 +407,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.table{\r\n  margin: auto;\r\n  width: 800px;\n}\n.table table{\r\n  width: 100%;\r\n  border: black 1px solid;\n}\n.table thead{\r\n  background-color: rgb(36, 138, 179);\r\n  color: aliceblue;\n}\n.table tbody tr:nth-child(even){\r\n  background-color: rgb(202, 141, 179);\n}\n.table tbody tr:hover{\r\n  background-color: rgb(190, 201, 151);\n}\n.table th{\r\n  border: black 1px solid;\n}\n.table td{\r\n  border: black 1px solid;\n}\n.modal-backdrop{\r\n    background-color: rgb(0,0,0,0.5) !important;\n}\n.NewimagePreview{\r\n    width: 200px;\n}\n.feedback{\r\n    color: red;\n}\r\n", ""]);
+exports.push([module.i, "\n.table {\r\n    margin: auto;\r\n    width: 800px;\n}\n.table table {\r\n    width: 100%;\r\n    border: black 1px solid;\n}\n.table thead {\r\n    background-color: rgb(36, 138, 179);\r\n    color: aliceblue;\n}\n.table tbody tr:nth-child(even) {\r\n    background-color: rgb(202, 141, 179);\n}\n.table tbody tr:hover {\r\n    background-color: rgb(190, 201, 151);\n}\n.table th {\r\n    border: black 1px solid;\n}\n.table td {\r\n    border: black 1px solid;\n}\n.modal-backdrop {\r\n    background-color: rgb(0, 0, 0, 0.5) !important;\n}\n.NewimagePreview {\r\n    width: 200px;\n}\n.feedback {\r\n    color: red;\n}\r\n", ""]);
 
 // exports
 
@@ -383,37 +467,39 @@ var render = function() {
         "button",
         {
           staticClass: "btn btn-primary btn-sm",
-          on: { click: _vm.ShowDashTable }
+          on: { click: _vm.CreateDevice }
         },
-        [_vm._v("新增")]
+        [_vm._v("\n            新增\n        ")]
       ),
       _vm._v(" "),
       _c("div", { staticClass: "plane_content table" }, [
-        _vm.stationlist.length
+        _vm.DeviceList.length
           ? _c("table", [
               _vm._m(0),
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.stationlist, function(item, index) {
+                _vm._l(_vm.DeviceList, function(item, index) {
                   return _c("tr", { key: index }, [
                     _c("td", [_vm._v(_vm._s(index + 1))]),
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(item.name))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(item.device))]),
+                    _c("td", [_vm._v(_vm._s(item.place))]),
                     _vm._v(" "),
                     _c("td", [
-                      _c("img", {
-                        staticClass: "NewimagePreview",
-                        attrs: {
-                          src:
-                            _vm.$store.state.serverPath +
-                            "/storage/" +
-                            item.image,
-                          alt: item.name
-                        }
-                      })
+                      item.image
+                        ? _c("img", {
+                            staticClass: "NewimagePreview",
+                            attrs: {
+                              src:
+                                _vm.$store.state.serverPath +
+                                "/storage/" +
+                                item.image,
+                              alt: item.name
+                            }
+                          })
+                        : _c("p", [_vm._v("無圖片")])
                     ]),
                     _vm._v(" "),
                     _c("td", [
@@ -424,11 +510,15 @@ var render = function() {
                             staticClass: "btn btn-warning btn-sm",
                             on: {
                               click: function($event) {
-                                return _vm.EditStaionData(item, index)
+                                return _vm.EditDeviceData(item, index)
                               }
                             }
                           },
-                          [_vm._v("更新")]
+                          [
+                            _vm._v(
+                              "\n                                    更新\n                                "
+                            )
+                          ]
                         ),
                         _vm._v(" "),
                         _c(
@@ -437,11 +527,15 @@ var render = function() {
                             staticClass: "btn btn-danger btn-sm",
                             on: {
                               click: function($event) {
-                                return _vm.DeleteStaionData(item, index)
+                                return _vm.DeleteDeviceData(item, index)
                               }
                             }
                           },
-                          [_vm._v("刪除")]
+                          [
+                            _vm._v(
+                              "\n                                    刪除\n                                "
+                            )
+                          ]
                         )
                       ])
                     ])
@@ -474,64 +568,76 @@ var render = function() {
                 },
                 [
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "AAA" } }, [_vm._v("輸入AAA")]),
+                    _c("label", { attrs: { for: "planeName" } }, [
+                      _vm._v("輸入盤名")
+                    ]),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.stationData.name,
-                          expression: "stationData.name"
+                          value: _vm.DevicenData.name,
+                          expression: "DevicenData.name"
                         }
                       ],
                       staticClass: "form-control",
                       attrs: {
                         type: "text",
-                        id: "AAA",
-                        placeholder: "輸入AAA"
+                        id: "planeName",
+                        placeholder: "輸入盤名"
                       },
-                      domProps: { value: _vm.stationData.name },
+                      domProps: { value: _vm.DevicenData.name },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.$set(_vm.stationData, "name", $event.target.value)
+                          _vm.$set(_vm.DevicenData, "name", $event.target.value)
                         }
                       }
                     }),
                     _vm._v(" "),
                     _vm.error.name
                       ? _c("div", { staticClass: "feedback" }, [
-                          _vm._v(_vm._s(_vm.error.name[0]))
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(_vm.error.name[0]) +
+                              "\n                        "
+                          )
                         ])
                       : _vm._e()
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "BBB" } }, [_vm._v("輸入BBB")]),
+                    _c("label", { attrs: { for: "place" } }, [
+                      _vm._v("輸入位置")
+                    ]),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.stationData.device,
-                          expression: "stationData.device"
+                          value: _vm.DevicenData.place,
+                          expression: "DevicenData.place"
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { type: "text", id: "BBB", placeholder: "BBB" },
-                      domProps: { value: _vm.stationData.device },
+                      attrs: {
+                        type: "text",
+                        id: "place",
+                        placeholder: "輸入位置"
+                      },
+                      domProps: { value: _vm.DevicenData.place },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
                           _vm.$set(
-                            _vm.stationData,
-                            "device",
+                            _vm.DevicenData,
+                            "place",
                             $event.target.value
                           )
                         }
@@ -540,7 +646,11 @@ var render = function() {
                     _vm._v(" "),
                     _vm.error.device
                       ? _c("div", { staticClass: "feedback" }, [
-                          _vm._v(_vm._s(_vm.error.device[0]))
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(_vm.error.device[0]) +
+                              "\n                        "
+                          )
                         ])
                       : _vm._e()
                   ])
@@ -549,7 +659,7 @@ var render = function() {
               _vm._v(" "),
               _c("form", [
                 _c("div", { staticClass: "form-group" }, [
-                  _vm.stationData.image
+                  _vm.DevicenData.image
                     ? _c("div", [
                         _c("img", {
                           ref: "NewimageDisplay",
@@ -558,7 +668,7 @@ var render = function() {
                             src:
                               _vm.$store.state.serverPath +
                               "/storage/" +
-                              _vm.stationData.image,
+                              _vm.DevicenData.image,
                             alt: ""
                           }
                         })
@@ -578,7 +688,11 @@ var render = function() {
                   _vm._v(" "),
                   _vm.error.image
                     ? _c("div", { staticClass: "feedback" }, [
-                        _vm._v(_vm._s(_vm.error.image[0]))
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(_vm.error.image[0]) +
+                            "\n                        "
+                        )
                       ])
                     : _vm._e()
                 ])
@@ -594,7 +708,11 @@ var render = function() {
                     attrs: { type: "button" },
                     on: { click: _vm.HideDashTable }
                   },
-                  [_vm._v("取消")]
+                  [
+                    _vm._v(
+                      "\n                        取消\n                    "
+                    )
+                  ]
                 ),
                 _vm._v(" "),
                 _c(
@@ -604,7 +722,7 @@ var render = function() {
                     attrs: { type: "submit" },
                     on: { click: _vm.SubmitDashtable }
                   },
-                  [_c("span", { staticClass: "fa fa-check" }, [_vm._v("輸入")])]
+                  [_c("span", { staticClass: "fa fa-check" }, [_vm._v("上傳")])]
                 )
               ])
             ])

@@ -34,22 +34,20 @@ class DeviceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {        
         $request->validate([
             'Circleline_Station_id'=>'required|alpha_num',
             'device_types_id' => 'required|alpha_num',
-            'device_lists_id' => 'required|alpha_num',
             'name' => 'required',
-            'place' => 'required',
+            'devicePlace' => 'required',
             'image' => 'image|mimes:jpeg,png,jpg',
         ]);
 
         $Device = New Device();
         $Device->Circleline_Station_id = $request->Circleline_Station_id;
         $Device->device_types_id = $request->device_types_id;
-        $Device->device_lists_id = $request->device_lists_id;
         $Device->name = $request->name;
-        $Device->place = $request->place;
+        $Device->place = $request->devicePlace;
         $path="";
         if($request->file('image')){
             $path = $request->file('image')->store('image');
@@ -68,9 +66,10 @@ class DeviceController extends Controller
      * @param  \App\Device  $device
      * @return \Illuminate\Http\Response
      */
-    public function show($device)
+    public function show(Request $device)
     {
-        return $device;
+        $DeviceData = Device::where('Circleline_Station_id',$device->Circleline_Station_id)->where('device_types_id',$device->device_types_id)->get();
+        return response()->json(["data"=>$DeviceData,"message"=>"成功","statu_code"=>"200"], 200);
     }
 
     /**
@@ -91,23 +90,21 @@ class DeviceController extends Controller
      * @param  \App\Device  $device
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update( $id,Request $request)
     {
         $request->validate([
             'Circleline_Station_id'=>'required|alpha_num',
             'device_types_id' => 'required|alpha_num',
-            'device_lists_id' => 'required|alpha_num',
             'name' => 'required',
-            'place' => 'required',
+            'devicePlace' => 'required',
             'image' => 'image|mimes:jpeg,png,jpg',
         ]);
 
         $Device = Device::find($id);
         $Device->Circleline_Station_id = $request->Circleline_Station_id;
         $Device->device_types_id = $request->device_types_id;
-        $Device->device_lists_id = $request->device_lists_id;
         $Device->name = $request->name;
-        $Device->place = $request->place;
+        $Device->place = $request->devicePlace;
         $Device->updated_at = date('Y-m-d H:i:s');
 
         if($request->file('image')){
@@ -132,9 +129,9 @@ class DeviceController extends Controller
      * @param  \App\Device  $device
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy( $DeviceId)
     {
-        $item = Device::find($id);
+        $item = Device::find($DeviceId);
         if($item->delete()){
             if($item->image){
                 Storage::delete($item->image);

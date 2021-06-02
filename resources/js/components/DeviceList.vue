@@ -26,7 +26,9 @@
                     class="btn btn-outline-primary btn-lg"
                     :to="{
                         name: 'device',
-                        params: { deviceID: item.pivot.device_types_id }
+                        params: {
+                            deviceID: item.pivot.device_types_id
+                        }
                     }"
                     >{{ item.device }}</router-link
                 >
@@ -41,8 +43,7 @@ import * as stationData_serveice from "../serveices/stationData_serveice";
 export default {
     data() {
         return {
-            DeviceList: [],
-            station: null
+            DeviceList: []
         };
     },
     mounted() {

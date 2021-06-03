@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Device;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DeviceController extends Controller
 {
@@ -106,14 +107,12 @@ class DeviceController extends Controller
         $Device->name = $request->name;
         $Device->place = $request->devicePlace;
         $Device->updated_at = date('Y-m-d H:i:s');
-
         if($request->file('image')){
-            $path = $request->file('image')->store('image');
-            $Device->image = $path;
-        }else{
             if ($Device->image) {
                 Storage::delete($Device->image);
             }
+            $path = $request->file('image')->store('image');
+            $Device->image = $path;
         }
 
         if($Device->save()){

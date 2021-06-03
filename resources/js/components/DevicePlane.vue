@@ -241,14 +241,14 @@ export default {
                         this.DevicenData.id,
                         formdata
                     );
-                    console.log(res);
                     this.edit = false;
-                    this.DevicenData.image = res.data.image;
+                    console.log(res);
+                    this.DevicenData.image = res.data.data.image;
                 } else {
                     const res = await stationData_serveice.createDeviceData(
                         formdata
                     );
-                    this.DeviceList.unshift(res.data);
+                    this.DeviceList.unshift(res.data.data);
                 }
 
                 this.HideDashTable();

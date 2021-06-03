@@ -325,9 +325,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 11:
                 res = _context3.sent;
-                console.log(res);
                 this.edit = false;
-                this.DevicenData.image = res.data.image;
+                console.log(res);
+                this.DevicenData.image = res.data.data.image;
                 _context3.next = 21;
                 break;
 
@@ -337,7 +337,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 19:
                 _res = _context3.sent;
-                this.DeviceList.unshift(_res.data);
+                this.DeviceList.unshift(_res.data.data);
 
               case 21:
                 this.HideDashTable();

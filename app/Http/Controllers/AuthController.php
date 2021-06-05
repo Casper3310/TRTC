@@ -45,13 +45,13 @@ class AuthController extends Controller
 
         $user = $request->user();
         switch ($user->role) {
-            case 'Admin':
+            case 'admin':
                 $tokendata = $user->createToken('管理者', ['do_anything']);
                 break;
-            case 'Water':
+            case 'water':
                 $tokendata = $user->createToken('水系統', ['manipulate_water']);
                 break;
-            case 'Fire':
+            case 'fire':
                 $tokendata = $user->createToken('消防系統', ['manipulate_fire']);
                 break;
             default:

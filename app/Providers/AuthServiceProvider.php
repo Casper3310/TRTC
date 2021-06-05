@@ -29,9 +29,9 @@ class AuthServiceProvider extends ServiceProvider
         Passport::routes();
 
         Passport::tokensCan([
-            'do_anything' => 'Admin',
-            'manipulate_water' => 'Water',
-            'manipulate_fire' => 'Fire',
+            'do_anything' => 'admin',
+            'manipulate_water' => 'water',
+            'manipulate_fire' => 'fire',
             'read' => 'visitor'
         ]);
     }

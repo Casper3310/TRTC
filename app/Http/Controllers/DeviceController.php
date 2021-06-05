@@ -158,4 +158,8 @@ class DeviceController extends Controller
             'status'=>'200'
         ], 200);
     }
+
+    public function aaa(){
+        return "adasdw";
+    }
 }

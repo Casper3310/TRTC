@@ -18,7 +18,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('Station', 'StationController');
+Route::prefix('Device')->group(function(){
+    Route::resource('DeviceEarth', 'DeviceEarthController');
+    Route::resource('DeviceFireBox', 'DeviceFireBoxController');
+    Route::resource('DeviceLight', 'DeviceLightController');
+    Route::resource('DevicePump', 'DevicePumpController');
+    Route::resource('DeviceSmokeDetector', 'DeviceSmokeDetectorController');
+    Route::resource('DeviceSocket', 'DeviceSocketController');
+});
+
 Route::resource('Circleline_Station', 'CirclelineStationController');
 Route::resource('Device', 'DeviceController');
 

@@ -9,7 +9,6 @@
                 {{ item.stations_name }}
             </router-link>
         </ul>
-        <router-view></router-view>
     </div>
 </template>
 <script>

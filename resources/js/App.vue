@@ -5,6 +5,7 @@
             >水電資料</router-link
         >
         <StationBar></StationBar>
+        <router-view></router-view>
     </div>
 </template>
 <script>

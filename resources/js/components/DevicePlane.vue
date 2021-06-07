@@ -1,12 +1,12 @@
 <template>
     <div>
         <div>
-            <h2>OO設備</h2>
+            <h2>{{ DeviceName }}設備</h2>
             <button class="btn btn-primary btn-sm" v-on:click="CreateDevice">
                 新增
             </button>
             <div class="plane_content table">
-                <table v-if="DeviceList.length">
+                <table v-if="DeviceDataList.length">
                     <thead>
                         <tr>
                             <th scope="col">項次</th>
@@ -17,7 +17,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(item, index) in DeviceList" :key="index">
+                        <tr
+                            v-for="(item, index) in DeviceDataList"
+                            :key="index"
+                        >
                             <td>{{ index + 1 }}</td>
                             <td>{{ item.name }}</td>
                             <td>{{ item.place }}</td>
@@ -52,6 +55,7 @@
                         </tr>
                     </tbody>
                 </table>
+
                 <div v-else>無資料</div>
             </div>
         </div>
@@ -63,7 +67,7 @@
                             <label for="planeName">輸入盤名</label>
                             <input
                                 type="text"
-                                v-model="DevicenData.name"
+                                v-model="DeviceData.name"
                                 class="form-control"
                                 id="planeName"
                                 placeholder="輸入盤名"
@@ -76,7 +80,7 @@
                             <label for="place">輸入位置</label>
                             <input
                                 type="text"
-                                v-model="DevicenData.place"
+                                v-model="DeviceData.place"
                                 class="form-control"
                                 id="place"
                                 placeholder="輸入位置"
@@ -88,10 +92,10 @@
                     </form>
                     <form>
                         <div class="form-group">
-                            <div v-if="DevicenData.image">
+                            <div v-if="DeviceData.image">
                                 <img
                                     :src="
-                                        `${$store.state.serverPath}/storage/${DevicenData.image}`
+                                        `${$store.state.serverPath}/storage/${DeviceData.image}`
                                     "
                                     ref="NewimageDisplay"
                                     alt=""
@@ -130,7 +134,6 @@
                     </div>
                 </div>
             </b-modal>
-
             <FlashMessage :position="'right top'"></FlashMessage>
         </div>
     </div>
@@ -139,38 +142,42 @@
 import * as stationData_serveice from "../serveices/stationData_serveice";
 
 export default {
-    name: "station",
+    props: {
+        DeviceName: {
+            type: String,
+            required: true
+        },
+        DeviceEnName: {
+            type: String,
+            required: true
+        },
+        StationID: {
+            type: Number,
+            required: true
+        }
+    },
     data() {
         return {
-            DeviceList: [],
-            DevicenData: {
-                name: "",
-                place: "",
-                image: ""
-            },
+            DeviceData: {},
+            DeviceDataList: [],
             edit: false,
-            index: null,
+            index: true,
             error: {}
         };
     },
-    computed: {
-        selectData() {
-            return {
-                deviceID: parseInt(this.$route.params.deviceID),
-                stationID: parseInt(this.$route.params.stationID)
-            };
-        }
-    },
+    computed: {},
     mounted() {
-        this.LoadDeviceData();
+        this.LoadDeviceData(this.StationID, this.DeviceEnName);
     },
     methods: {
-        LoadDeviceData: async function() {
+        LoadDeviceData: async function(stationID, DeviceName) {
             try {
+                stationID = parseInt(this.$route.params.stationID);
                 const res = await stationData_serveice.LoadDeviceData(
-                    this.selectData
+                    stationID,
+                    DeviceName
                 );
-                this.DeviceList = res.data.data;
+                this.DeviceDataList = res.data.data;
             } catch (error) {
                 console.log(error);
                 this.flashMessage.error({
@@ -183,8 +190,10 @@ export default {
             if (window.confirm(`你確定刪除${item.name}`)) {
                 try {
                     const res = await stationData_serveice.DeleteDeviceData(
-                        item.id
+                        item.id,
+                        this.DeviceEnName
                     );
+                    console.log(res);
                     this.DeviceList.splice(index, 1);
                 } catch (error) {
                     console.log(error);
@@ -192,13 +201,13 @@ export default {
             }
         },
         EditDeviceData(item, index) {
-            this.DevicenData = item;
+            this.DeviceData = item;
             this.$refs.dashtable.show();
             this.edit = true;
             this.index = index;
         },
         attachImage() {
-            this.DevicenData.image = this.$refs.Newimage.files[0];
+            this.DeviceData.image = this.$refs.Newimage.files[0];
             let reader = new FileReader();
             reader.addEventListener(
                 "load",
@@ -210,7 +219,7 @@ export default {
             //reader.addEventListener('load',(()=>{
             //    this.$refs.NewimageDisplay.src = reader.result;
             //}))
-            reader.readAsDataURL(this.DevicenData.image);
+            reader.readAsDataURL(this.DeviceData.image);
         },
         HideDashTable() {
             this.$refs.dashtable.hide();
@@ -218,7 +227,7 @@ export default {
         CreateDevice() {
             this.$refs.dashtable.show();
             this.edit = false;
-            this.DevicenData = {
+            this.DeviceData = {
                 name: "",
                 place: "",
                 image: ""
@@ -226,29 +235,29 @@ export default {
         },
         SubmitDashtable: async function() {
             let formdata = new FormData();
-            formdata.append("Circleline_Station_id", this.selectData.stationID);
-            formdata.append("device_types_id", this.selectData.deviceID);
-            formdata.append("name", this.DevicenData.name);
-            formdata.append("devicePlace", this.DevicenData.place);
-            if (this.DevicenData.image) {
-                formdata.append("image", this.DevicenData.image);
+            formdata.append("Circleline_Station_id", this.StationID);
+            formdata.append("name", this.DeviceData.name);
+            formdata.append("place", this.DeviceData.place);
+            if (this.DeviceData.image) {
+                formdata.append("image", this.DeviceData.image);
             }
 
             try {
                 if (this.edit) {
                     formdata.append("_method", "put");
                     const res = await stationData_serveice.UpdataDeviceData(
-                        this.DevicenData.id,
-                        formdata
+                        this.DeviceData.id,
+                        formdata,
+                        this.DeviceEnName
                     );
                     this.edit = false;
-                    console.log(res);
-                    this.DevicenData.image = res.data.data.image;
+                    this.DeviceData.image = res.data.data.image;
                 } else {
                     const res = await stationData_serveice.createDeviceData(
-                        formdata
+                        formdata,
+                        this.DeviceEnName
                     );
-                    this.DeviceList.unshift(res.data.data);
+                    this.DeviceDataList.unshift(res.data.data);
                 }
 
                 this.HideDashTable();
@@ -262,24 +271,16 @@ export default {
                     image: ""
                 };
             } catch (error) {
-                switch (error.response.status) {
-                    case 422:
-                        this.error = error.response.data.errors;
-                        break;
-                    default:
-                        this.flashMessage.error({
-                            message: "錯誤!",
-                            time: 5000
-                        });
-                        break;
-                }
+                console.log(error);
+                this.flashMessage.error({
+                    message: "錯誤!",
+                    time: 5000
+                });
             }
         }
     },
     watch: {
-        $route() {
-            this.LoadDeviceData();
-        }
+        $route() {}
     }
 };
 </script>

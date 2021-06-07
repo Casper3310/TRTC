@@ -128,8 +128,9 @@ class DeviceController extends Controller
      * @param  \App\Device  $device
      * @return \Illuminate\Http\Response
      */
-    public function destroy( $DeviceId)
+    public function destroy($DeviceId)
     {
+        return $DeviceId;
         $item = Device::find($DeviceId);
         if($item->delete()){
             if($item->image){

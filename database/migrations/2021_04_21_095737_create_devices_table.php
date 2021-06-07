@@ -16,7 +16,6 @@ class CreateDevicesTable extends Migration
         Schema::create('devices', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('Circleline_Station_id');
-            $table->unsignedBigInteger('device_types_id');
             $table->string('name');
             $table->string('place');
             $table->text('image');
@@ -27,10 +26,6 @@ class CreateDevicesTable extends Migration
             ->on('circleline__stations')
             ->onDelete('cascade');
 
-            $table->foreign('device_types_id')
-                    ->references('id')
-                    ->on('device_types')
-                    ->onDelete('cascade');
         });
     }
 

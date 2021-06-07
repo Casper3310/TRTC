@@ -1,93 +1,84 @@
 <template>
     <div>
-        <div v-if="water.length">
+        <div>
             <p>水電設備</p>
             <hr />
             <div class="stationbutton">
-                <router-link
-                    v-for="(item, index) in water"
-                    :key="index"
+                <button
                     class="btn btn-outline-primary btn-lg"
-                    :to="{
-                        name: 'device',
-                        params: { deviceID: item.pivot.device_types_id }
-                    }"
-                    >{{ item.device }}</router-link
+                    @click="SetDeviceName(1, '照明', 'DeviceLight')"
                 >
+                    照明
+                </button>
+                <button
+                    class="btn btn-outline-primary btn-lg"
+                    @click="SetDeviceName(2)"
+                >
+                    插座
+                </button>
+                <button
+                    class="btn btn-outline-primary btn-lg"
+                    @click="SetDeviceName(3)"
+                >
+                    接地
+                </button>
+                <button class="btn btn-outline-primary btn-lg">泵浦</button>
             </div>
         </div>
-        <div v-if="fire.length">
+        <div>
             <p>消防設備</p>
             <hr />
-            <div class="stationbutton">
-                <router-link
-                    v-for="(item, index) in fire"
-                    :key="index"
-                    class="btn btn-outline-primary btn-lg"
-                    :to="{
-                        name: 'device',
-                        params: {
-                            deviceID: item.pivot.device_types_id
-                        }
-                    }"
-                    >{{ item.device }}</router-link
-                >
-            </div>
+            <div class="stationbutton"></div>
+            <button class="btn btn-outline-primary btn-lg">偵煙器</button>
+            <button class="btn btn-outline-primary btn-lg">消防箱</button>
         </div>
-        <router-view></router-view>
+        <DevicePlane
+            v-if="ShowList"
+            :DeviceName="DeviceName"
+            :DeviceEnName="DeviceEnName"
+            :StationID="StationID"
+        ></DevicePlane>
+        <div v-else>sss</div>
     </div>
 </template>
 <script>
-import * as stationData_serveice from "../serveices/stationData_serveice";
+import DevicePlane from "./DevicePlane.vue";
 
 export default {
+    components: { DevicePlane },
     data() {
         return {
-            DeviceList: []
+            DeviceName: "",
+            DeviceEnName: "",
+            StationID: 0,
+            ShowList: false
         };
     },
-    mounted() {
-        this.LoadDeviceList();
-    },
-    computed: {
-        DeviceType() {
-            let SortType = [];
-            let DeviceListlength = this.DeviceList.length;
-            for (let i = 0; i < DeviceListlength; i++) {
-                if (!SortType.includes(this.DeviceList[i].type)) {
-                    SortType.push(this.DeviceList[i].type);
-                }
-            }
-            return SortType;
-        },
-        water() {
-            return this.DeviceList.filter(item => item.type == "水電");
-        },
-        fire() {
-            return this.DeviceList.filter(item => item.type == "消防");
-        }
-    },
+    mounted() {},
+    computed: {},
     methods: {
-        LoadDeviceList: async function() {
-            try {
-                let stationID = parseInt(this.$route.params.stationID);
-                const res = await stationData_serveice.LoadDeviceList(
-                    stationID
-                );
-                this.DeviceList = res.data;
-            } catch (error) {
-                console.log(error);
-                this.flashMessage.error({
-                    message: "錯誤!",
-                    time: 5000
-                });
-            }
-        }
-    },
-    watch: {
-        $route() {
-            this.LoadDeviceList();
+        SetDeviceName(StationID, DeviceName, DeviceEnName) {
+            this.DeviceName = DeviceName;
+            this.DeviceEnName = DeviceEnName;
+            this.StationID = StationID;
+            this.ShowList = true;
         }
     }
 };
 </script>
+<style>
+p {
+    text-align: center;
+    font-size: 50px;
+}
+.stationbutton {
+    margin: auto;
+    width: 800px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.stationbutton button {
+    margin: 10px;
+}
+</style>

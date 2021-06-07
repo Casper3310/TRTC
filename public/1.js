@@ -157,7 +157,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "station",
+  props: {
+    ddd: ddd
+  },
   data: function data() {
     return {
       DeviceList: [],
@@ -179,8 +181,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       };
     }
   },
-  mounted: function mounted() {
-    this.LoadDeviceData();
+  mounted: function mounted() {//this.LoadDeviceData();
   },
   methods: {
     LoadDeviceData: function () {
@@ -728,6 +729,8 @@ var render = function() {
             ])
           ]
         ),
+        _vm._v(" "),
+        _c("div", [_vm._v(_vm._s(_vm.name))]),
         _vm._v(" "),
         _c("FlashMessage", { attrs: { position: "right top" } })
       ],

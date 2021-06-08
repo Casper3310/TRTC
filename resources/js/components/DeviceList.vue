@@ -6,31 +6,53 @@
             <div class="stationbutton">
                 <button
                     class="btn btn-outline-primary btn-lg"
-                    @click="SetDeviceName(1, '照明', 'DeviceLight')"
+                    @click="SetDeviceName(StationID, '照明', 'DeviceLight')"
                 >
                     照明
                 </button>
                 <button
                     class="btn btn-outline-primary btn-lg"
-                    @click="SetDeviceName(2)"
+                    @click="SetDeviceName(StationID, '插座', 'DeviceSocket')"
                 >
                     插座
                 </button>
                 <button
                     class="btn btn-outline-primary btn-lg"
-                    @click="SetDeviceName(3)"
+                    @click="SetDeviceName(StationID, '接地', 'DeviceEarth')"
                 >
                     接地
                 </button>
-                <button class="btn btn-outline-primary btn-lg">泵浦</button>
+                <button
+                    class="btn btn-outline-primary btn-lg"
+                    @click="SetDeviceName(StationID, '泵浦', 'DevicePump')"
+                >
+                    泵浦
+                </button>
             </div>
         </div>
         <div>
             <p>消防設備</p>
             <hr />
-            <div class="stationbutton"></div>
-            <button class="btn btn-outline-primary btn-lg">偵煙器</button>
-            <button class="btn btn-outline-primary btn-lg">消防箱</button>
+            <div class="stationbutton">
+                <button
+                    class="btn btn-outline-primary btn-lg"
+                    @click="
+                        SetDeviceName(
+                            StationID,
+                            '偵煙器',
+                            'DeviceSmokeDetector'
+                        )
+                    "
+                >
+                    偵煙器
+                </button>
+                <button
+                    class="btn btn-outline-primary btn-lg"
+                    @click="SetDeviceName(StationID, '消防箱', 'DeviceFireBox')"
+                >
+                    消防箱
+                </button>
+            </div>
         </div>
         <DevicePlane
             v-if="ShowList"
@@ -38,7 +60,7 @@
             :DeviceEnName="DeviceEnName"
             :StationID="StationID"
         ></DevicePlane>
-        <div v-else>sss</div>
+        <p v-else>選擇設備</p>
     </div>
 </template>
 <script>
@@ -54,7 +76,9 @@ export default {
             ShowList: false
         };
     },
-    mounted() {},
+    mounted() {
+        this.StationID = parseInt(this.$route.params.stationID);
+    },
     computed: {},
     methods: {
         SetDeviceName(StationID, DeviceName, DeviceEnName) {
@@ -62,6 +86,12 @@ export default {
             this.DeviceEnName = DeviceEnName;
             this.StationID = StationID;
             this.ShowList = true;
+        }
+    },
+    watch: {
+        $route() {
+            this.ShowList = false;
+            this.StationID = parseInt(this.$route.params.stationID);
         }
     }
 };

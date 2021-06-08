@@ -193,8 +193,7 @@ export default {
                         item.id,
                         this.DeviceEnName
                     );
-                    console.log(res);
-                    this.DeviceList.splice(index, 1);
+                    this.DeviceDataList.splice(index, 1);
                 } catch (error) {
                     console.log(error);
                 }
@@ -280,7 +279,12 @@ export default {
         }
     },
     watch: {
-        $route() {}
+        $route() {
+            //this.LoadDeviceData(this.StationID, this.DeviceEnName);
+        },
+        DeviceName() {
+            this.LoadDeviceData(this.StationID, this.DeviceEnName);
+        }
     }
 };
 </script>

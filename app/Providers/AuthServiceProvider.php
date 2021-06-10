@@ -27,12 +27,12 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Passport::routes();
-
+        //Scope 名稱陣列和 Scope 說明。Scope 說明可以是任何你希望的內容，並會在同意授權畫面上顯示給使用者
         Passport::tokensCan([
-            'do_anything' => 'admin',
-            'manipulate_water' => 'water',
-            'manipulate_fire' => 'fire',
-            'read' => 'visitor'
+            'do_anything' => 'admin管理者',
+            'manipulate_water' => 'water水電設備',
+            'manipulate_fire' => 'fire消防設備',
+            'read' => 'visitor其他'
         ]);
     }
 }

@@ -30,10 +30,6 @@ Route::prefix('Device')->group(function(){
 Route::resource('Circleline_Station', 'CirclelineStationController');
 Route::resource('Device', 'DeviceController');
 
-Route::prefix('Station/Device')->group(function () {
-    Route::get('Fire','DeviceController@aaa');
-});
-
 
 Route::group(['prefix' => 'auth' ],function () {
     Route::post('register', 'AuthController@register');
@@ -48,7 +44,7 @@ Route::group(['prefix' => 'uesr' ],function () {
     Route::group(['middleware' => 'auth:api' ],function () {
         Route::post('create_water', function () {
             return response()->json(['message' => '水電操作', 'statu' => '200'], 200);
-        })->middleware('scope:manipulate_water');
+        })->middleware('scope:manipulate_water,do_anything');
 
         Route::post('create_fire', function () {
             return response()->json(['message' => '消防操作', 'statu' => '200'], 200);

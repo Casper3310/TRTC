@@ -11,13 +11,11 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-
         $request->validate([
             'name' => 'required|string|max:20',
             'email' => 'required|string|email',
             'password' => 'required|string|confirmed'
         ]);
-
         $user = new User();
 
         $user->name = $request->name;
@@ -49,10 +47,10 @@ class AuthController extends Controller
                 $tokendata = $user->createToken('管理者', ['do_anything']);
                 break;
             case 'water':
-                $tokendata = $user->createToken('水系統', ['manipulate_water']);
+                $tokendata = $user->createToken('新增刪除水系統', ['manipulate_water']);
                 break;
             case 'fire':
-                $tokendata = $user->createToken('消防系統', ['manipulate_fire']);
+                $tokendata = $user->createToken('新增刪除消防系統', ['manipulate_fire']);
                 break;
             default:
                 # code...

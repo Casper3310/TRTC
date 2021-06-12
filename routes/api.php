@@ -31,23 +31,32 @@ Route::resource('Circleline_Station', 'CirclelineStationController');
 Route::resource('Device', 'DeviceController');
 
 
-Route::group(['prefix' => 'auth' ],function () {
+Route::prefix('auth')->group(function () {
     Route::post('register', 'AuthController@register');
     Route::post('login', 'AuthController@login');
-    Route::group(['middleware' => 'auth:api' ],function () {
+    Route::middleware(['auth:api'])->group(function(){
         Route::get('logout', 'AuthController@logout');
     });
-
+    
 });
+
+
 
 Route::group(['prefix' => 'uesr' ],function () {
     Route::group(['middleware' => 'auth:api' ],function () {
-        Route::post('create_water', function () {
-            return response()->json(['message' => '水電操作', 'statu' => '200'], 200);
-        })->middleware('scope:manipulate_water,do_anything');
-
-        Route::post('create_fire', function () {
-            return response()->json(['message' => '消防操作', 'statu' => '200'], 200);
-        })->middleware('scope:manipulate_fire,manipulate_water');
+        Route::middleware(['scope:manipulate_water'])->group(function(){
+            Route::post('create_water', function () {
+                return response()->json(['message' => '水電操作', 'statu' => '200'], 200);
+            }); 
+        });
+        
+        Route::middleware(['scope:manipulate_fire'])->group(function(){
+            Route::post('create_fire', function () {
+                return response()->json(['message' => '消防操作', 'statu' => '200'], 200);
+            });
+        });
+    });
+    Route::post('create_fire', function () {
+        return response()->json(['message' => '消防操作', 'statu' => '200'], 200);
     });
 });

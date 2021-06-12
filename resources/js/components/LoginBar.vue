@@ -4,6 +4,8 @@
         <div>
             <div class="Login-item">
                 <b-button @click="registerShow">註冊</b-button>
+                <b-button @click="Logout">登出</b-button>
+                <b-button @click="LoginShow">登入</b-button>
                 <b-modal ref="register" hide-footer title="註冊資料">
                     <div>
                         <form @submit.prevent>
@@ -40,6 +42,18 @@
                                     v-model="register.password"
                                 />
                             </div>
+                            <div class="form-group">
+                                <label for="Login_password_confirmation"
+                                    >再次輸入密碼</label
+                                >
+                                <input
+                                    class="form-control"
+                                    type="password"
+                                    placeholder="再次輸入密碼"
+                                    id="Login_password_confirmation"
+                                    v-model="register.password_confirmation"
+                                />
+                            </div>
                         </form>
                     </div>
                     <div class="text-right">
@@ -53,7 +67,7 @@
                         <button
                             type="submit"
                             class="btn btn-primary"
-                            @click="registe"
+                            @click="Register"
                         >
                             <span class="fa fa-check">送出申請</span>
                         </button>
@@ -61,7 +75,6 @@
                 </b-modal>
             </div>
             <div class="Login-item">
-                <b-button @click="LoginShow">登入</b-button>
                 <b-modal ref="Login" hide-footer title="登入資料">
                     <div>
                         <form @submit.prevent>
@@ -72,7 +85,7 @@
                                     type="email"
                                     placeholder="輸入email"
                                     id="Login_email"
-                                    v-model="Login.email"
+                                    v-model="LoginData.email"
                                 />
                             </div>
                             <div class="form-group">
@@ -82,7 +95,7 @@
                                     type="password"
                                     placeholder="輸入密碼"
                                     id="Login_password"
-                                    v-model="Login.password"
+                                    v-model="LoginData.password"
                                 />
                             </div>
                         </form>
@@ -95,7 +108,11 @@
                         >
                             取消
                         </button>
-                        <button type="submit" class="btn btn-primary">
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                            @click="Login"
+                        >
                             <span class="fa fa-check">登入</span>
                         </button>
                     </div>
@@ -105,14 +122,63 @@
     </div>
 </template>
 <script>
+import * as Login_serveice from "../serveices/Login_serveice";
 export default {
     data() {
         return {
-            Login: { email: "", password: "" },
-            register: { name: "", email: "", password: "" }
+            user: { RoleName: "", token_scopes: [], expires_at: "" },
+            LoginData: { email: "", password: "" },
+            register: {
+                name: "",
+                email: "",
+                password: "",
+                password_confirmation: ""
+            }
         };
     },
     methods: {
+        Login: async function() {
+            try {
+                const res = await Login_serveice.Login(this.LoginData);
+                this.user.RoleName = res.data.name;
+                this.user.token_scopes = res.data.token_scopes;
+                this.user.expires_at = res.data.expires_at;
+                localStorage.setItem("TRTC", res.data.accessToken);
+                this.LoginHide();
+            } catch (error) {
+                console.log(error);
+                this.flashMessage.error({
+                    message: "錯誤!",
+                    time: 5000
+                });
+            }
+        },
+        Logout: async function() {
+            try {
+                const res = await Login_serveice.Logout();
+                console.log(res);
+                localStorage.removeItem("TRTC");
+            } catch (error) {
+                console.log(error);
+                this.flashMessage.error({
+                    message: "錯誤!",
+                    time: 5000
+                });
+            }
+        },
+        Register: async function() {
+            try {
+                const res = await Login_serveice.Register(this.register);
+                console.log(res);
+                this.registerHide();
+            } catch {
+                console.log(error);
+                this.flashMessage.error({
+                    message: "錯誤!",
+                    time: 5000
+                });
+            }
+        },
         LoginShow() {
             this.$refs.Login.show();
         },
@@ -124,8 +190,7 @@ export default {
         },
         registerHide() {
             this.$refs.register.hide();
-        },
-        registe: async function() {}
+        }
     }
 };
 </script>

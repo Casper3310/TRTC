@@ -59,13 +59,16 @@ class AuthController extends Controller
         $user = $request->user();
         switch ($user->role) {
             case 'admin':
-                $tokendata = $user->createToken('管理者', ['manipulate_water', 'manipulate_fire']);
+                $tokendata = $user->createToken('管理者', ['manipulate_water', 'manipulate_fire','Admin']);
                 break;
             case 'water':
-                $tokendata = $user->createToken('新增刪除水系統', ['manipulate_water']);
+                $tokendata = $user->createToken('水電股', ['manipulate_water', 'manipulate_fire','Admin']);
                 break;
             case 'fire':
-                $tokendata = $user->createToken('新增刪除消防系統', ['manipulate_fire']);
+                $tokendata = $user->createToken('空調股', ['manipulate_BMS','manipulate_AirConditioner','Admin']);
+                break;
+            case 'fire':
+                $tokendata = $user->createToken('電梯股', ['manipulate_Escalator','manipulate_elevator','Admin']);
                 break;
             default:
                 # code...
@@ -79,6 +82,7 @@ class AuthController extends Controller
 
         if ($token->save()) {
             return response()->json([
+                'user_name' => $user->name,
                 'accessToken' => $tokendata->accessToken,
                 'token_type' => 'Bearer',
                 'token_scopes' => $tokendata->token->scopes,

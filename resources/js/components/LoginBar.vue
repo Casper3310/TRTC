@@ -126,7 +126,7 @@ import * as Login_serveice from "../serveices/Login_serveice";
 export default {
     data() {
         return {
-            user: { RoleName: "", token_scopes: [], expires_at: "" },
+            user: {},
             LoginData: { email: "", password: "" },
             register: {
                 name: "",
@@ -140,11 +140,10 @@ export default {
         Login: async function() {
             try {
                 const res = await Login_serveice.Login(this.LoginData);
-                this.user.RoleName = res.data.name;
-                this.user.token_scopes = res.data.token_scopes;
-                this.user.expires_at = res.data.expires_at;
-                localStorage.setItem("TRTC", res.data.accessToken);
+                localStorage.setItem("TRTC", JSON.stringify(res.data));
                 this.LoginHide();
+                let sss = JSON.parse(localStorage.getItem("TRTC"));
+                console.log(sss.accessToken);
             } catch (error) {
                 console.log(error);
                 this.flashMessage.error({
@@ -156,7 +155,6 @@ export default {
         Logout: async function() {
             try {
                 const res = await Login_serveice.Logout();
-                console.log(res);
                 localStorage.removeItem("TRTC");
             } catch (error) {
                 console.log(error);
@@ -179,6 +177,7 @@ export default {
                 });
             }
         },
+
         LoginShow() {
             this.$refs.Login.show();
         },

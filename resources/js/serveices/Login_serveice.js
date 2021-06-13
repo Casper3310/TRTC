@@ -1,4 +1,4 @@
-import { http, httpFile } from "./http_serveice";
+import { http, httpToken } from "./http_serveice";
 
 export function Register(RegisterData) {
     return http().post('auth/register', RegisterData);
@@ -9,5 +9,5 @@ export function Login(LoginData) {
 }
 
 export function Logout() {
-    return http().get('auth/logout');
+    return httpToken().get('auth/logout');
 }

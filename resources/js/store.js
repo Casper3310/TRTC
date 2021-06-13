@@ -15,27 +15,16 @@ export default new Vuex.Store({
     state: {
         apiURL: 'http://127.0.0.1:8000/api',
         serverPath: 'http://127.0.0.1:8000',
-        station: [],
-        StationID: 0,
+        User: {},
     },
     mutations: {
-        SetStaion(state, station) {
-            state.station = station;
-        },
-        SetStationID(state, StationID) {
-            state.StationID = StationID
+        SetUser(state, playload) {
+            state.User = playload;
         }
     },
     actions: {
-        Loadstation(context) {
-            return http().get('/Circleline_Station').then(res => {
-                context.commit('SetStaion', res.data);
-            })
-        },
-        LoadDeviceList(context) {
-            return http().get('/Circleline_Station').then(res => {
-                context.commit('SetStaion', res.data);
-            })
+        SetUser(context, playload) {
+            context.commit('SetUser', playload);
         }
     }
 })

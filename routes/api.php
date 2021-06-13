@@ -19,12 +19,26 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::prefix('Device')->group(function(){
-    Route::resource('DeviceEarth', 'DeviceEarthController');
-    Route::resource('DeviceFireBox', 'DeviceFireBoxController');
-    Route::resource('DeviceLight', 'DeviceLightController');
-    Route::resource('DevicePump', 'DevicePumpController');
-    Route::resource('DeviceSmokeDetector', 'DeviceSmokeDetectorController');
-    Route::resource('DeviceSocket', 'DeviceSocketController');
+    Route::middleware(['auth:api'])->group(function(){
+        Route::middleware(['scope:manipulate_water'])->group(function(){
+            Route::resource('DeviceEarth', 'DeviceEarthController',['except' => ['show']]);
+            Route::resource('DeviceLight', 'DeviceLightController',['except' => ['show']]);
+            Route::resource('DevicePump', 'DevicePumpController',['except' => ['show']]);
+            Route::resource('DeviceSocket', 'DeviceSocketController',['except' => ['show']]);
+        });
+        Route::middleware(['scope:manipulate_fire'])->group(function(){
+            Route::resource('DeviceFireBox', 'DeviceFireBoxController',['except' => ['show']]);
+            Route::resource('DeviceSmokeDetector', 'DeviceSmokeDetectorController',['except' => ['show']]);
+        });
+    });
+    
+    Route::get('DeviceEarth/{DeviceEarth}', 'DeviceEarthController@show');
+    Route::get('DeviceLight/{DeviceLight}', 'DeviceLightController@show');
+    Route::get('DevicePump/{DevicePump}', 'DevicePumpController@show');
+    Route::get('DeviceSocket/{DeviceSocket}', 'DeviceSocketController@show');
+    Route::get('DeviceFireBox/{DeviceFireBox}', 'DeviceFireBoxController@show');
+    Route::get('DeviceSmokeDetector/{DeviceSmokeDetector}', 'DeviceSmokeDetectorController@show');
+
 });
 
 Route::resource('Circleline_Station', 'CirclelineStationController');

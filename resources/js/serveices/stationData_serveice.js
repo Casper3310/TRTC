@@ -1,4 +1,4 @@
-import { http, httpFile } from "./http_serveice";
+import { http, httpFile, httpToken } from "./http_serveice";
 
 export function LoadStationList() {
     return http().get('Circleline_Station')
@@ -14,9 +14,9 @@ export function createDeviceData(data, DeviceName) {
 }
 
 export function DeleteDeviceData(DeviceId, DeviceName) {
-    return http().delete(`/Device/${DeviceName}/${DeviceId}`);
+    return httpFile().delete(`/Device/${DeviceName}/${DeviceId}`);
 }
 
 export function UpdataDeviceData(DeviceId, data, DeviceName) {
-    return http().post(`/Device/${DeviceName}/${DeviceId}`, data);
+    return httpFile().post(`/Device/${DeviceName}/${DeviceId}`, data);
 }

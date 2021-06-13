@@ -142,4 +142,5 @@ class DeviceLightController extends Controller
             ], 500);
         }
     }
+    
 }

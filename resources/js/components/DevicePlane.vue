@@ -2,7 +2,11 @@
     <div>
         <div>
             <h2>{{ DeviceName }}設備</h2>
-            <button class="btn btn-primary btn-sm" v-on:click="CreateDevice">
+            <button
+                class="btn btn-primary btn-sm"
+                v-on:click="CreateDevice"
+                v-if="rolecan"
+            >
                 新增
             </button>
             <div class="plane_content table">
@@ -37,7 +41,7 @@
                             </td>
 
                             <td>
-                                <div>
+                                <div v-if="rolecan">
                                     <button
                                         class="btn btn-warning btn-sm"
                                         @click="EditDeviceData(item, index)"
@@ -154,6 +158,9 @@ export default {
         StationID: {
             type: Number,
             required: true
+        },
+        role: {
+            type: String
         }
     },
     data() {
@@ -165,7 +172,11 @@ export default {
             error: {}
         };
     },
-    computed: {},
+    computed: {
+        rolecan() {
+            return this.$store.state.role === this.role;
+        }
+    },
     mounted() {
         this.LoadDeviceData(this.StationID, this.DeviceEnName);
     },
@@ -222,6 +233,11 @@ export default {
         },
         HideDashTable() {
             this.$refs.dashtable.hide();
+            this.DeviceData = {
+                name: "",
+                place: "",
+                image: ""
+            };
         },
         CreateDevice() {
             this.$refs.dashtable.show();
@@ -302,10 +318,13 @@ export default {
     color: aliceblue;
 }
 .table tbody tr:nth-child(even) {
-    background-color: rgb(202, 141, 179);
+    background-color: rgb(54, 187, 94);
+}
+.table tbody tr:nth-child(odd) {
+    background-color: rgb(111, 136, 190);
 }
 .table tbody tr:hover {
-    background-color: rgb(190, 201, 151);
+    background-color: rgb(206, 226, 134);
 }
 .table th {
     border: black 1px solid;

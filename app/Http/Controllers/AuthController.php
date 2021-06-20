@@ -59,15 +59,15 @@ class AuthController extends Controller
         $user = $request->user();
         switch ($user->role) {
             case 'admin':
-                $tokendata = $user->createToken('管理者', ['manipulate_water', 'manipulate_fire','Admin']);
+                $tokendata = $user->createToken('管理者', ['Admin']);
                 break;
             case 'water':
-                $tokendata = $user->createToken('水電股', ['manipulate_water', 'manipulate_fire','Admin']);
+                $tokendata = $user->createToken('水電股', ['manipulate_water','manipulate_fire','Admin']);
                 break;
-            case 'fire':
+            case 'aaa':
                 $tokendata = $user->createToken('空調股', ['manipulate_BMS','manipulate_AirConditioner','Admin']);
                 break;
-            case 'fire':
+            case 'eee':
                 $tokendata = $user->createToken('電梯股', ['manipulate_Escalator','manipulate_elevator','Admin']);
                 break;
             default:
@@ -98,4 +98,5 @@ class AuthController extends Controller
         $request->user()->token()->revoke();
         return response()->json(['message' => '登出成功', 'statu' => '200'], 200);
     }
+
 }

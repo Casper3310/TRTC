@@ -6,25 +6,48 @@
             <div class="stationbutton">
                 <button
                     class="btn btn-outline-primary btn-lg"
-                    @click="SetDeviceName(StationID, '照明', 'DeviceLight')"
+                    @click="
+                        SetDeviceName(
+                            StationID,
+                            '照明',
+                            'DeviceLight',
+                            '水電股'
+                        )
+                    "
                 >
                     照明
                 </button>
                 <button
                     class="btn btn-outline-primary btn-lg"
-                    @click="SetDeviceName(StationID, '插座', 'DeviceSocket')"
+                    @click="
+                        SetDeviceName(
+                            StationID,
+                            '插座',
+                            'DeviceSocket',
+                            '水電股'
+                        )
+                    "
                 >
                     插座
                 </button>
                 <button
                     class="btn btn-outline-primary btn-lg"
-                    @click="SetDeviceName(StationID, '接地', 'DeviceEarth')"
+                    @click="
+                        SetDeviceName(
+                            StationID,
+                            '接地',
+                            'DeviceEarth',
+                            '水電股'
+                        )
+                    "
                 >
                     接地
                 </button>
                 <button
                     class="btn btn-outline-primary btn-lg"
-                    @click="SetDeviceName(StationID, '泵浦', 'DevicePump')"
+                    @click="
+                        SetDeviceName(StationID, '泵浦', 'DevicePump', '水電股')
+                    "
                 >
                     泵浦
                 </button>
@@ -40,7 +63,8 @@
                         SetDeviceName(
                             StationID,
                             '偵煙器',
-                            'DeviceSmokeDetector'
+                            'DeviceSmokeDetector',
+                            '水電股'
                         )
                     "
                 >
@@ -48,7 +72,14 @@
                 </button>
                 <button
                     class="btn btn-outline-primary btn-lg"
-                    @click="SetDeviceName(StationID, '消防箱', 'DeviceFireBox')"
+                    @click="
+                        SetDeviceName(
+                            StationID,
+                            '消防箱',
+                            'DeviceFireBox',
+                            '水電股'
+                        )
+                    "
                 >
                     消防箱
                 </button>
@@ -59,6 +90,7 @@
             :DeviceName="DeviceName"
             :DeviceEnName="DeviceEnName"
             :StationID="StationID"
+            :role="role"
         ></DevicePlane>
         <p v-else>選擇設備</p>
     </div>
@@ -73,7 +105,8 @@ export default {
             DeviceName: "",
             DeviceEnName: "",
             StationID: 0,
-            ShowList: false
+            ShowList: false,
+            role: ""
         };
     },
     mounted() {
@@ -81,11 +114,12 @@ export default {
     },
     computed: {},
     methods: {
-        SetDeviceName(StationID, DeviceName, DeviceEnName) {
+        SetDeviceName(StationID, DeviceName, DeviceEnName, role) {
             this.DeviceName = DeviceName;
             this.DeviceEnName = DeviceEnName;
             this.StationID = StationID;
             this.ShowList = true;
+            this.role = role;
         }
     },
     watch: {

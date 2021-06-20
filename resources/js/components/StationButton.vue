@@ -5,9 +5,9 @@
         </div>
         <div class="stationbutton">
             <router-link
-                v-for="(item, index) in station_list"
+                v-for="(item, index) in StationList"
                 :key="index"
-                :to="{ path: `/${item.codename}` }"
+                :to="{ path: `/station/${item.id}` }"
                 class="btn btn-outline-primary btn-lg"
             >
                 {{ item.stations_name }}
@@ -16,12 +16,11 @@
     </div>
 </template>
 <script>
-import * as CircleLine_serveice from "../serveices/CircleLine_serveice";
-
+import * as stationData_serveice from "../serveices/stationData_serveice";
 export default {
     data() {
         return {
-            station_list: []
+            StationList: []
         };
     },
     mounted() {
@@ -30,8 +29,8 @@ export default {
     methods: {
         LoadStationList: async function() {
             try {
-                const res = await CircleLine_serveice.LoadStationList();
-                this.station_list = res.data.data;
+                const res = await stationData_serveice.LoadStationList();
+                this.StationList = res.data.data;
             } catch (error) {
                 console.log(error);
                 this.flashMessage.error({

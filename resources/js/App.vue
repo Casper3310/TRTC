@@ -20,6 +20,9 @@ export default {
         SearchComponent,
         DeviceList,
         LoginBar
+    },
+    mounted() {
+        this.$store.dispatch("SetLogin");
     }
 };
 </script>

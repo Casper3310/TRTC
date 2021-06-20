@@ -15,16 +15,24 @@ export default new Vuex.Store({
     state: {
         apiURL: 'http://127.0.0.1:8000/api',
         serverPath: 'http://127.0.0.1:8000',
-        User: {},
+        isLogin: false,
+        role: ""
     },
     mutations: {
-        SetUser(state, playload) {
-            state.User = playload;
+        SetLogin(state, playload) {
+            const userdata = JSON.parse(localStorage.getItem("TRTC"))
+            state.isLogin = false
+            state.role = "vistor";
+            if (localStorage.getItem('TRTC')) {
+                state.isLogin = true;
+                state.role = userdata.name;
+            }
+
         }
     },
     actions: {
-        SetUser(context, playload) {
-            context.commit('SetUser', playload);
+        SetLogin(context, playload) {
+            context.commit('SetLogin', playload);
         }
     }
 })

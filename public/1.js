@@ -155,54 +155,63 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    ddd: ddd
+    DeviceName: {
+      type: String,
+      required: true
+    },
+    DeviceEnName: {
+      type: String,
+      required: true
+    },
+    StationID: {
+      type: Number,
+      required: true
+    }
   },
   data: function data() {
     return {
-      DeviceList: [],
-      DevicenData: {
-        name: "",
-        place: "",
-        image: ""
-      },
+      DeviceData: {},
+      DeviceDataList: [],
       edit: false,
-      index: null,
+      index: true,
       error: {}
     };
   },
-  computed: {
-    selectData: function selectData() {
-      return {
-        deviceID: parseInt(this.$route.params.deviceID),
-        stationID: parseInt(this.$route.params.stationID)
-      };
-    }
-  },
-  mounted: function mounted() {//this.LoadDeviceData();
+  computed: {},
+  mounted: function mounted() {
+    this.LoadDeviceData(this.StationID, this.DeviceEnName);
   },
   methods: {
     LoadDeviceData: function () {
-      var _LoadDeviceData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var _LoadDeviceData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(stationID, DeviceName) {
         var res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.prev = 0;
-                _context.next = 3;
-                return _serveices_stationData_serveice__WEBPACK_IMPORTED_MODULE_1__["LoadDeviceData"](this.selectData);
+                stationID = parseInt(this.$route.params.stationID);
+                _context.next = 4;
+                return _serveices_stationData_serveice__WEBPACK_IMPORTED_MODULE_1__["LoadDeviceData"](stationID, DeviceName);
 
-              case 3:
+              case 4:
                 res = _context.sent;
-                this.DeviceList = res.data.data;
-                _context.next = 11;
+                this.DeviceDataList = res.data.data;
+                _context.next = 12;
                 break;
 
-              case 7:
-                _context.prev = 7;
+              case 8:
+                _context.prev = 8;
                 _context.t0 = _context["catch"](0);
                 console.log(_context.t0);
                 this.flashMessage.error({
@@ -210,15 +219,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   time: 5000
                 });
 
-              case 11:
+              case 12:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[0, 7]]);
+        }, _callee, this, [[0, 8]]);
       }));
 
-      function LoadDeviceData() {
+      function LoadDeviceData(_x, _x2) {
         return _LoadDeviceData.apply(this, arguments);
       }
 
@@ -238,11 +247,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _context2.prev = 1;
                 _context2.next = 4;
-                return _serveices_stationData_serveice__WEBPACK_IMPORTED_MODULE_1__["DeleteDeviceData"](item.id);
+                return _serveices_stationData_serveice__WEBPACK_IMPORTED_MODULE_1__["DeleteDeviceData"](item.id, this.DeviceEnName);
 
               case 4:
                 res = _context2.sent;
-                this.DeviceList.splice(index, 1);
+                this.DeviceDataList.splice(index, 1);
                 _context2.next = 11;
                 break;
 
@@ -259,20 +268,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2, this, [[1, 8]]);
       }));
 
-      function DeleteDeviceData(_x, _x2) {
+      function DeleteDeviceData(_x3, _x4) {
         return _DeleteDeviceData.apply(this, arguments);
       }
 
       return DeleteDeviceData;
     }(),
     EditDeviceData: function EditDeviceData(item, index) {
-      this.DevicenData = item;
+      this.DeviceData = item;
       this.$refs.dashtable.show();
       this.edit = true;
       this.index = index;
     },
     attachImage: function attachImage() {
-      this.DevicenData.image = this.$refs.Newimage.files[0];
+      this.DeviceData.image = this.$refs.Newimage.files[0];
       var reader = new FileReader();
       reader.addEventListener("load", function () {
         this.$refs.NewimageDisplay.src = reader.result;
@@ -281,7 +290,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       //    this.$refs.NewimageDisplay.src = reader.result;
       //}))
 
-      reader.readAsDataURL(this.DevicenData.image);
+      reader.readAsDataURL(this.DeviceData.image);
     },
     HideDashTable: function HideDashTable() {
       this.$refs.dashtable.hide();
@@ -289,7 +298,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     CreateDevice: function CreateDevice() {
       this.$refs.dashtable.show();
       this.edit = false;
-      this.DevicenData = {
+      this.DeviceData = {
         name: "",
         place: "",
         image: ""
@@ -304,43 +313,41 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context3.prev = _context3.next) {
               case 0:
                 formdata = new FormData();
-                formdata.append("Circleline_Station_id", this.selectData.stationID);
-                formdata.append("device_types_id", this.selectData.deviceID);
-                formdata.append("name", this.DevicenData.name);
-                formdata.append("devicePlace", this.DevicenData.place);
+                formdata.append("Circleline_Station_id", this.StationID);
+                formdata.append("name", this.DeviceData.name);
+                formdata.append("place", this.DeviceData.place);
 
-                if (this.DevicenData.image) {
-                  formdata.append("image", this.DevicenData.image);
+                if (this.DeviceData.image) {
+                  formdata.append("image", this.DeviceData.image);
                 }
 
-                _context3.prev = 6;
+                _context3.prev = 5;
 
                 if (!this.edit) {
-                  _context3.next = 17;
+                  _context3.next = 15;
                   break;
                 }
 
                 formdata.append("_method", "put");
-                _context3.next = 11;
-                return _serveices_stationData_serveice__WEBPACK_IMPORTED_MODULE_1__["UpdataDeviceData"](this.DevicenData.id, formdata);
+                _context3.next = 10;
+                return _serveices_stationData_serveice__WEBPACK_IMPORTED_MODULE_1__["UpdataDeviceData"](this.DeviceData.id, formdata, this.DeviceEnName);
 
-              case 11:
+              case 10:
                 res = _context3.sent;
                 this.edit = false;
-                console.log(res);
-                this.DevicenData.image = res.data.data.image;
-                _context3.next = 21;
+                this.DeviceData.image = res.data.data.image;
+                _context3.next = 19;
                 break;
 
+              case 15:
+                _context3.next = 17;
+                return _serveices_stationData_serveice__WEBPACK_IMPORTED_MODULE_1__["createDeviceData"](formdata, this.DeviceEnName);
+
               case 17:
-                _context3.next = 19;
-                return _serveices_stationData_serveice__WEBPACK_IMPORTED_MODULE_1__["createDeviceData"](formdata);
+                _res = _context3.sent;
+                this.DeviceDataList.unshift(_res.data.data);
 
               case 19:
-                _res = _context3.sent;
-                this.DeviceList.unshift(_res.data.data);
-
-              case 21:
                 this.HideDashTable();
                 this.flashMessage.success({
                   message: "成功輸入!",
@@ -351,33 +358,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   place: "",
                   image: ""
                 };
-                _context3.next = 35;
+                _context3.next = 28;
                 break;
 
-              case 26:
-                _context3.prev = 26;
-                _context3.t0 = _context3["catch"](6);
-                _context3.t1 = _context3.t0.response.status;
-                _context3.next = _context3.t1 === 422 ? 31 : 33;
-                break;
-
-              case 31:
-                this.error = _context3.t0.response.data.errors;
-                return _context3.abrupt("break", 35);
-
-              case 33:
+              case 24:
+                _context3.prev = 24;
+                _context3.t0 = _context3["catch"](5);
+                console.log(_context3.t0);
                 this.flashMessage.error({
                   message: "錯誤!",
                   time: 5000
                 });
-                return _context3.abrupt("break", 35);
 
-              case 35:
+              case 28:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, this, [[6, 26]]);
+        }, _callee3, this, [[5, 24]]);
       }));
 
       function SubmitDashtable() {
@@ -388,8 +386,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }()
   },
   watch: {
-    $route: function $route() {
-      this.LoadDeviceData();
+    $route: function $route() {//this.LoadDeviceData(this.StationID, this.DeviceEnName);
+    },
+    DeviceName: function DeviceName() {
+      this.LoadDeviceData(this.StationID, this.DeviceEnName);
     }
   }
 });
@@ -462,25 +462,27 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", [
-      _c("h2", [_vm._v("OO設備")]),
+      _c("h2", [_vm._v(_vm._s(_vm.DeviceName) + "設備")]),
       _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary btn-sm",
-          on: { click: _vm.CreateDevice }
-        },
-        [_vm._v("\n            新增\n        ")]
-      ),
+      this.$store.state.isLogin
+        ? _c(
+            "button",
+            {
+              staticClass: "btn btn-primary btn-sm",
+              on: { click: _vm.CreateDevice }
+            },
+            [_vm._v("\n            新增\n        ")]
+          )
+        : _vm._e(),
       _vm._v(" "),
       _c("div", { staticClass: "plane_content table" }, [
-        _vm.DeviceList.length
+        _vm.DeviceDataList.length
           ? _c("table", [
               _vm._m(0),
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.DeviceList, function(item, index) {
+                _vm._l(_vm.DeviceDataList, function(item, index) {
                   return _c("tr", { key: index }, [
                     _c("td", [_vm._v(_vm._s(index + 1))]),
                     _vm._v(" "),
@@ -578,8 +580,8 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.DevicenData.name,
-                          expression: "DevicenData.name"
+                          value: _vm.DeviceData.name,
+                          expression: "DeviceData.name"
                         }
                       ],
                       staticClass: "form-control",
@@ -588,13 +590,13 @@ var render = function() {
                         id: "planeName",
                         placeholder: "輸入盤名"
                       },
-                      domProps: { value: _vm.DevicenData.name },
+                      domProps: { value: _vm.DeviceData.name },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.$set(_vm.DevicenData, "name", $event.target.value)
+                          _vm.$set(_vm.DeviceData, "name", $event.target.value)
                         }
                       }
                     }),
@@ -620,8 +622,8 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.DevicenData.place,
-                          expression: "DevicenData.place"
+                          value: _vm.DeviceData.place,
+                          expression: "DeviceData.place"
                         }
                       ],
                       staticClass: "form-control",
@@ -630,17 +632,13 @@ var render = function() {
                         id: "place",
                         placeholder: "輸入位置"
                       },
-                      domProps: { value: _vm.DevicenData.place },
+                      domProps: { value: _vm.DeviceData.place },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.$set(
-                            _vm.DevicenData,
-                            "place",
-                            $event.target.value
-                          )
+                          _vm.$set(_vm.DeviceData, "place", $event.target.value)
                         }
                       }
                     }),
@@ -660,7 +658,7 @@ var render = function() {
               _vm._v(" "),
               _c("form", [
                 _c("div", { staticClass: "form-group" }, [
-                  _vm.DevicenData.image
+                  _vm.DeviceData.image
                     ? _c("div", [
                         _c("img", {
                           ref: "NewimageDisplay",
@@ -669,7 +667,7 @@ var render = function() {
                             src:
                               _vm.$store.state.serverPath +
                               "/storage/" +
-                              _vm.DevicenData.image,
+                              _vm.DeviceData.image,
                             alt: ""
                           }
                         })
@@ -729,8 +727,6 @@ var render = function() {
             ])
           ]
         ),
-        _vm._v(" "),
-        _c("div", [_vm._v(_vm._s(_vm.name))]),
         _vm._v(" "),
         _c("FlashMessage", { attrs: { position: "right top" } })
       ],
@@ -848,6 +844,88 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DevicePlane_vue_vue_type_template_id_2388098b___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/serveices/http_serveice.js":
+/*!*************************************************!*\
+  !*** ./resources/js/serveices/http_serveice.js ***!
+  \*************************************************/
+/*! exports provided: http, httpFile, httpToken */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "http", function() { return http; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "httpFile", function() { return httpFile; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "httpToken", function() { return httpToken; });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./resources/js/store.js");
+
+
+function http() {
+  return axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
+    baseURL: _store__WEBPACK_IMPORTED_MODULE_1__["default"].state.apiURL
+  });
+}
+function httpFile() {
+  var Token = JSON.parse(localStorage.getItem("TRTC"));
+  return axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
+    baseURL: _store__WEBPACK_IMPORTED_MODULE_1__["default"].state.apiURL,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: "Bearer " + Token.accessToken
+    }
+  });
+}
+function httpToken() {
+  var Token = JSON.parse(localStorage.getItem("TRTC"));
+  return axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
+    baseURL: _store__WEBPACK_IMPORTED_MODULE_1__["default"].state.apiURL,
+    headers: {
+      Authorization: "Bearer " + Token.accessToken
+    }
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/serveices/stationData_serveice.js":
+/*!********************************************************!*\
+  !*** ./resources/js/serveices/stationData_serveice.js ***!
+  \********************************************************/
+/*! exports provided: LoadStationList, LoadDeviceData, createDeviceData, DeleteDeviceData, UpdataDeviceData */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoadStationList", function() { return LoadStationList; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoadDeviceData", function() { return LoadDeviceData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createDeviceData", function() { return createDeviceData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DeleteDeviceData", function() { return DeleteDeviceData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UpdataDeviceData", function() { return UpdataDeviceData; });
+/* harmony import */ var _http_serveice__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./http_serveice */ "./resources/js/serveices/http_serveice.js");
+
+function LoadStationList() {
+  return Object(_http_serveice__WEBPACK_IMPORTED_MODULE_0__["http"])().get('Circleline_Station');
+}
+function LoadDeviceData(stationID, DeviceName) {
+  return Object(_http_serveice__WEBPACK_IMPORTED_MODULE_0__["http"])().get("Device/".concat(DeviceName, "/").concat(stationID), {
+    params: {
+      stationID: stationID
+    }
+  });
+}
+function createDeviceData(data, DeviceName) {
+  return Object(_http_serveice__WEBPACK_IMPORTED_MODULE_0__["httpFile"])().post("/Device/".concat(DeviceName), data);
+}
+function DeleteDeviceData(DeviceId, DeviceName) {
+  return Object(_http_serveice__WEBPACK_IMPORTED_MODULE_0__["httpFile"])()["delete"]("/Device/".concat(DeviceName, "/").concat(DeviceId));
+}
+function UpdataDeviceData(DeviceId, data, DeviceName) {
+  return Object(_http_serveice__WEBPACK_IMPORTED_MODULE_0__["httpFile"])().post("/Device/".concat(DeviceName, "/").concat(DeviceId), data);
+}
 
 /***/ })
 

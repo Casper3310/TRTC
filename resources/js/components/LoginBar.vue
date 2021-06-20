@@ -1,11 +1,30 @@
 <template>
     <div class="LoginBar">
-        <div></div>
+        <div>
+            <button
+                class="btn btn-primary"
+                v-if="!this.$store.state.isLogin"
+                @click="registerShow"
+            >
+                註冊
+            </button>
+            <button
+                class="btn btn-primary"
+                v-if="this.$store.state.isLogin"
+                @click="Logout"
+            >
+                登出
+            </button>
+            <button
+                class="btn btn-primary"
+                v-if="!this.$store.state.isLogin"
+                @click="LoginShow"
+            >
+                登入
+            </button>
+        </div>
         <div>
             <div class="Login-item">
-                <b-button @click="registerShow">註冊</b-button>
-                <b-button @click="Logout">登出</b-button>
-                <b-button @click="LoginShow">登入</b-button>
                 <b-modal ref="register" hide-footer title="註冊資料">
                     <div>
                         <form @submit.prevent>
@@ -142,8 +161,7 @@ export default {
                 const res = await Login_serveice.Login(this.LoginData);
                 localStorage.setItem("TRTC", JSON.stringify(res.data));
                 this.LoginHide();
-                let sss = JSON.parse(localStorage.getItem("TRTC"));
-                console.log(sss.accessToken);
+                this.$store.dispatch("SetLogin");
             } catch (error) {
                 console.log(error);
                 this.flashMessage.error({
@@ -156,6 +174,7 @@ export default {
             try {
                 const res = await Login_serveice.Logout();
                 localStorage.removeItem("TRTC");
+                this.$store.dispatch("SetLogin");
             } catch (error) {
                 console.log(error);
                 this.flashMessage.error({
@@ -196,7 +215,8 @@ export default {
 <style>
 .LoginBar {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
+    margin: 10px;
 }
 .Login-item {
     display: inline-block;

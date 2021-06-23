@@ -6,24 +6,24 @@ Vue.use(Vuex);
 
 function http() {
     return axios.create({
-        baseURL: "http://127.0.0.1:8000/api"
+        baseURL: "http://ec2-18-181-184-3.ap-northeast-1.compute.amazonaws.com/public/api"
     })
 }
 
 export default new Vuex.Store({
-    strict: true,
     state: {
-        apiURL: 'http://127.0.0.1:8000/api',
-        serverPath: 'http://127.0.0.1:8000',
+        apiURL: 'http://ec2-18-181-184-3.ap-northeast-1.compute.amazonaws.com/public/api',
+        serverPath: 'http://ec2-18-181-184-3.ap-northeast-1.compute.amazonaws.com/public',
         isLogin: false,
-        role: ""
+        role: "",
     },
     mutations: {
         SetLogin(state, playload) {
-            const userdata = JSON.parse(localStorage.getItem("TRTC"))
+
             state.isLogin = false
             state.role = "vistor";
             if (localStorage.getItem('TRTC')) {
+                const userdata = JSON.parse(localStorage.getItem("TRTC"))
                 state.isLogin = true;
                 state.role = userdata.name;
             }

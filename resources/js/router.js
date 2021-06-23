@@ -5,10 +5,10 @@ import b1 from './components/view/b1.vue'
 Vue.use(VueRouter)
 
 const routes = [
-    /*{
+    {
         path: '*',
         redirect: '/'
-    },*/
+    },
     {
         path: '/',
         name: 'home',
@@ -28,6 +28,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+    mode: 'history',
     routes
 })
 

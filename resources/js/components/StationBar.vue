@@ -8,6 +8,9 @@
             >
                 {{ item.stations_name }}
             </router-link>
+            <router-link v-if="this.$store.state.role.includes('Admin')" to="/">
+                sss
+            </router-link>
         </ul>
     </div>
 </template>

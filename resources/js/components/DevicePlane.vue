@@ -160,7 +160,7 @@ export default {
             required: true
         },
         role: {
-            type: String
+            type: [Array, String]
         }
     },
     data() {
@@ -174,7 +174,7 @@ export default {
     },
     computed: {
         rolecan() {
-            return this.$store.state.role === this.role;
+            return this.$store.state.role.includes(this.role);
         }
     },
     mounted() {

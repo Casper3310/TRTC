@@ -59,16 +59,16 @@ class AuthController extends Controller
         $user = $request->user();
         switch ($user->role) {
             case 'admin':
-                $tokendata = $user->createToken('管理者', ['Admin']);
+                $tokendata = $user->createToken('管理者', ['manipulate_water','manipulate_fire','manipulate_BMS','manipulate_AirConditioner','manipulate_Escalator','manipulate_elevator','Admin']);
                 break;
             case 'water':
-                $tokendata = $user->createToken('水電股', ['manipulate_water','manipulate_fire','Admin']);
+                $tokendata = $user->createToken('水電股', ['manipulate_water','manipulate_fire']);
                 break;
-            case 'aaa':
-                $tokendata = $user->createToken('空調股', ['manipulate_BMS','manipulate_AirConditioner','Admin']);
+            case 'air':
+                $tokendata = $user->createToken('空調股', ['manipulate_BMS','manipulate_AirConditioner']);
                 break;
-            case 'eee':
-                $tokendata = $user->createToken('電梯股', ['manipulate_Escalator','manipulate_elevator','Admin']);
+            case 'ele':
+                $tokendata = $user->createToken('電梯股', ['manipulate_Escalator','manipulate_elevator']);
                 break;
             default:
                 # code...

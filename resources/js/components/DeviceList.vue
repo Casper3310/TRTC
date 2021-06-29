@@ -11,7 +11,7 @@
                             StationID,
                             '照明',
                             'DeviceLight',
-                            '水電股'
+                            'manipulate_water'
                         )
                     "
                 >
@@ -24,7 +24,7 @@
                             StationID,
                             '插座',
                             'DeviceSocket',
-                            '水電股'
+                            'manipulate_water'
                         )
                     "
                 >
@@ -37,7 +37,7 @@
                             StationID,
                             '接地',
                             'DeviceEarth',
-                            '水電股'
+                            'manipulate_water'
                         )
                     "
                 >
@@ -46,7 +46,12 @@
                 <button
                     class="btn btn-outline-primary btn-lg"
                     @click="
-                        SetDeviceName(StationID, '泵浦', 'DevicePump', '水電股')
+                        SetDeviceName(
+                            StationID,
+                            '泵浦',
+                            'DevicePump',
+                            'manipulate_water'
+                        )
                     "
                 >
                     泵浦
@@ -64,7 +69,7 @@
                             StationID,
                             '偵煙器',
                             'DeviceSmokeDetector',
-                            '水電股'
+                            'manipulate_fire'
                         )
                     "
                 >
@@ -77,7 +82,7 @@
                             StationID,
                             '消防箱',
                             'DeviceFireBox',
-                            '水電股'
+                            'manipulate_fire'
                         )
                     "
                 >

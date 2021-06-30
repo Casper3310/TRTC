@@ -1,28 +1,37 @@
 <template>
-    <div class="LoginBar">
-        <div>
-            <button
-                class="btn btn-primary"
-                v-if="!this.$store.state.isLogin"
-                @click="registerShow"
-            >
-                註冊
-            </button>
-            <button
-                class="btn btn-primary"
-                v-if="this.$store.state.isLogin"
-                @click="Logout"
-            >
-                登出
-            </button>
-            <button
-                class="btn btn-primary"
-                v-if="!this.$store.state.isLogin"
-                @click="LoginShow"
-            >
-                登入
-            </button>
+    <div>
+        <div class="LoginBar">
+            <div>
+                <div class="sss" v-if="this.$store.state.isLogin">
+                    <p>姓名:{{ user.user_name }}</p>
+                    <p>身份:{{ user.name }}</p>
+                </div>
+            </div>
+            <div>
+                <button
+                    class="btn btn-primary"
+                    v-if="!this.$store.state.isLogin"
+                    @click="registerShow"
+                >
+                    註冊
+                </button>
+                <button
+                    class="btn btn-primary"
+                    v-if="this.$store.state.isLogin"
+                    @click="Logout"
+                >
+                    登出
+                </button>
+                <button
+                    class="btn btn-primary"
+                    v-if="!this.$store.state.isLogin"
+                    @click="LoginShow"
+                >
+                    登入
+                </button>
+            </div>
         </div>
+
         <div>
             <div class="Login-item">
                 <b-modal ref="register" hide-footer title="註冊資料">
@@ -145,7 +154,6 @@ import * as Login_serveice from "../serveices/Login_serveice";
 export default {
     data() {
         return {
-            user: {},
             LoginData: { email: "", password: "" },
             register: {
                 name: "",
@@ -154,6 +162,11 @@ export default {
                 password_confirmation: ""
             }
         };
+    },
+    computed: {
+        user() {
+            return JSON.parse(localStorage.getItem("TRTC"));
+        }
     },
     methods: {
         Login: async function() {
@@ -215,10 +228,15 @@ export default {
 <style>
 .LoginBar {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     margin: 10px;
 }
 .Login-item {
     display: inline-block;
+}
+.sss p {
+    font-size: 20px;
+    display: inline-block;
+    margin-left: 10px;
 }
 </style>

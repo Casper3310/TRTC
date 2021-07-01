@@ -29,12 +29,16 @@ class AuthController extends Controller
         $message = array(
             'message' => $request->name . "申請帳號，確認權限"
         );
+        //建立curl連線
         $ch = curl_init();
+        //設定網址，表頭，方式
         curl_setopt($ch, CURLOPT_URL, "https://notify-api.line.me/api/notify");
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $message);
+        //執行curl
         curl_exec($ch);
+        //關閉curl連線
         curl_close($ch);
 
         if ($user->save()) {

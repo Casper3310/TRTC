@@ -36,12 +36,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       dateStart: "",
-      TempData: {
+      TempChartData: {
         labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
         datasets: [{
           label: "溫度",
@@ -50,7 +51,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           borderColor: ["red"]
         }]
       },
-      HumuidityData: {
+      HumuidityChartData: {
         labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
         datasets: [{
           label: "濕度",
@@ -58,12 +59,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           backgroundColor: ["blue"],
           borderColor: ["blue"]
         }]
-      }
+      },
+      SearchTempData: []
     };
   },
   mounted: function mounted() {
-    this.SetChar("myChart", this.TempData);
-    this.SetChar("myChart2", this.HumuidityData);
+    this.SetChar("myChart", this.TempChartData);
+    this.SetChar("myChart2", this.HumuidityChartData);
   },
   methods: {
     SearchTemp: function () {
@@ -79,21 +81,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 3:
                 res = _context.sent;
+                this.SearchTempData = res.data.data;
                 console.log(res);
-                _context.next = 10;
+                console.log(this.SearchTempData);
+                /*let a = this.SearchTempData.sort(function(a, b) {
+                    return a.created_at > b.created_at;
+                });
+                console.log(a);*/
+
+                console.log(this.SearchTempData.sort());
+                _context.next = 13;
                 break;
 
-              case 7:
-                _context.prev = 7;
+              case 10:
+                _context.prev = 10;
                 _context.t0 = _context["catch"](0);
                 console.log(_context.t0);
 
-              case 10:
+              case 13:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 7]]);
+        }, _callee, this, [[0, 10]]);
       }));
 
       function SearchTemp(_x) {
@@ -126,7 +136,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.flot-contant {\r\n    display: flex;\r\n    justify-content: center;\n}\n.chart {\r\n    width: 50%;\r\n    height: 200;\r\n    margin: 10px;\n}\n.btn {\r\n    margin-left: 10px;\n}\r\n", ""]);
+exports.push([module.i, "\n.flot-contant {\r\n    display: flex;\r\n    justify-content: center;\r\n    margin-bottom: 10px;\n}\n.chart {\r\n    width: 50%;\r\n    height: 200;\r\n    margin: 10px;\n}\n.btn {\r\n    margin-left: 10px;\n}\r\n", ""]);
 
 // exports
 
@@ -216,6 +226,8 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
+    _c("h2", [_vm._v("UPS室溫溼度")]),
+    _vm._v(" "),
     _vm._m(0)
   ])
 }
@@ -245,15 +257,14 @@ render._withStripped = true
 /*!******************************************!*\
   !*** ./resources/js/components/temp.vue ***!
   \******************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _temp_vue_vue_type_template_id_50f54c9f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./temp.vue?vue&type=template&id=50f54c9f& */ "./resources/js/components/temp.vue?vue&type=template&id=50f54c9f&");
 /* harmony import */ var _temp_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./temp.vue?vue&type=script&lang=js& */ "./resources/js/components/temp.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _temp_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _temp_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _temp_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./temp.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/temp.vue?vue&type=style&index=0&lang=css&");
+/* empty/unused harmony star reexport *//* harmony import */ var _temp_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./temp.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/temp.vue?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -285,7 +296,7 @@ component.options.__file = "resources/js/components/temp.vue"
 /*!*******************************************************************!*\
   !*** ./resources/js/components/temp.vue?vue&type=script&lang=js& ***!
   \*******************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

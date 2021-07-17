@@ -75,6 +75,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -85,7 +122,8 @@ __webpack_require__.r(__webpack_exports__);
       DeviceName: "",
       DeviceEnName: "",
       StationID: 0,
-      ShowList: false
+      ShowList: false,
+      role: ""
     };
   },
   mounted: function mounted() {
@@ -93,11 +131,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {},
   methods: {
-    SetDeviceName: function SetDeviceName(StationID, DeviceName, DeviceEnName) {
+    SetDeviceName: function SetDeviceName(StationID, DeviceName, DeviceEnName, role) {
       this.DeviceName = DeviceName;
       this.DeviceEnName = DeviceEnName;
       this.StationID = StationID;
       this.ShowList = true;
+      this.role = role;
     }
   },
   watch: {
@@ -189,7 +228,12 @@ var render = function() {
               staticClass: "btn btn-outline-primary btn-lg",
               on: {
                 click: function($event) {
-                  return _vm.SetDeviceName(_vm.StationID, "照明", "DeviceLight")
+                  return _vm.SetDeviceName(
+                    _vm.StationID,
+                    "照明",
+                    "DeviceLight",
+                    "manipulate_water"
+                  )
                 }
               }
             },
@@ -205,7 +249,8 @@ var render = function() {
                   return _vm.SetDeviceName(
                     _vm.StationID,
                     "插座",
-                    "DeviceSocket"
+                    "DeviceSocket",
+                    "manipulate_water"
                   )
                 }
               }
@@ -219,7 +264,12 @@ var render = function() {
               staticClass: "btn btn-outline-primary btn-lg",
               on: {
                 click: function($event) {
-                  return _vm.SetDeviceName(_vm.StationID, "接地", "DeviceEarth")
+                  return _vm.SetDeviceName(
+                    _vm.StationID,
+                    "接地",
+                    "DeviceEarth",
+                    "manipulate_water"
+                  )
                 }
               }
             },
@@ -232,7 +282,12 @@ var render = function() {
               staticClass: "btn btn-outline-primary btn-lg",
               on: {
                 click: function($event) {
-                  return _vm.SetDeviceName(_vm.StationID, "泵浦", "DevicePump")
+                  return _vm.SetDeviceName(
+                    _vm.StationID,
+                    "泵浦",
+                    "DevicePump",
+                    "manipulate_water"
+                  )
                 }
               }
             },
@@ -256,7 +311,8 @@ var render = function() {
                   return _vm.SetDeviceName(
                     _vm.StationID,
                     "偵煙器",
-                    "DeviceSmokeDetector"
+                    "DeviceSmokeDetector",
+                    "manipulate_fire"
                   )
                 }
               }
@@ -273,7 +329,8 @@ var render = function() {
                   return _vm.SetDeviceName(
                     _vm.StationID,
                     "消防箱",
-                    "DeviceFireBox"
+                    "DeviceFireBox",
+                    "manipulate_fire"
                   )
                 }
               }
@@ -288,7 +345,8 @@ var render = function() {
             attrs: {
               DeviceName: _vm.DeviceName,
               DeviceEnName: _vm.DeviceEnName,
-              StationID: _vm.StationID
+              StationID: _vm.StationID,
+              role: _vm.role
             }
           })
         : _c("p", [_vm._v("選擇設備")])

@@ -36,23 +36,11 @@ class DeviceController extends Controller
      */
     public function store(Request $request)
     {        
-        $request->validate([
-            'Circleline_Station_id'=>'required|alpha_num',
-            'device_types_id' => 'required|alpha_num',
-            'name' => 'required',
-            'devicePlace' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg',
-        ]);
-
         $Device = New Device();
-        $Device->Circleline_Station_id = $request->Circleline_Station_id;
-        $Device->device_types_id = $request->device_types_id;
+        $Device->Circleline_Station_id = 1;
         $Device->name = $request->name;
         $Device->place = $request->devicePlace;
         $path="";
-        if($request->file('image')){
-            $path = $request->file('image')->store('image');
-        }
         $Device->image = $path;
         if($Device->save()){
             return response()->json(["data"=>$Device,"message"=>"新增成功","statu_code"=>"200"], 200);

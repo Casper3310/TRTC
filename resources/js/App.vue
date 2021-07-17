@@ -5,6 +5,7 @@
             >水電資料</router-link
         >
         <StationBar></StationBar>
+
         <router-view></router-view>
     </div>
 </template>
@@ -32,6 +33,7 @@ export default {
     padding: 0;
     list-style: 0;
 }
+
 h1,
 h2 {
     text-align: center;

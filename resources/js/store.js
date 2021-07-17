@@ -28,8 +28,8 @@ export default new Vuex.Store({
             serverPath: 'http://ec2-18-181-184-3.ap-northeast-1.compute.amazonaws.com',
             isLogin: false,
             role: "",
-        },
-        */
+        },*/
+
     mutations: {
         SetLogin(state, playload) {
 

@@ -15,6 +15,11 @@ const routes = [
         component: () => import('./components/StationButton.vue')
     },
     {
+        path: '/station/temp',
+        name: "temp",
+        component: () => import('./components/temp.vue')
+    },
+    {
         path: '/station/:stationID',
         name: "station",
         component: () => import('./components/DeviceList.vue'),
@@ -22,8 +27,8 @@ const routes = [
             path: 'device/:deviceID',
             name: "device",
             component: () => import('./components/DevicePlane.vue')
-        },]
-    },
+        }]
+    }
 
 ]
 

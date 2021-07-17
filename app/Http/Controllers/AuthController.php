@@ -102,9 +102,10 @@ class AuthController extends Controller
         $request->user()->token()->revoke();
         return response()->json(['message' => '登出成功', 'statu' => '200'], 200);
     }
-
+    
     public function sss()
     {
+        
         $url = "https://trtccod.app/covid-health-report/actions.min.php";
         // 28135詹克家 28127邱資善 22214謝汶益 21513張展榮 28133陳志槐 28399陳彥誌 28389江智傑
         // 22185江秋遠 28138趙珮伶 28131周俊佑 20941沈旻頡 26566張智傑 26901朱宇凡 21288尤耀堂
@@ -146,6 +147,27 @@ class AuthController extends Controller
         curl_exec($curlobj);
         curl_close($curlobj);
         };
-        return curl_errno($curlobj);
+        //LineNotifty通知
+        $headers = array(
+            'Content-Type: multipart/form-data',
+            'Authorization: Bearer R00oWyw0zUNwmP7YRwypGBKIamQiqkDjE78JKbinxIH'
+        );
+        $message = array(
+            'message' => "溫度表單已提送"
+        );
+        //建立curl連線
+        $ch = curl_init();
+        //設定網址，表頭，方式
+        curl_setopt($ch, CURLOPT_URL, "https://notify-api.line.me/api/notify");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $message);
+        //執行curl
+        curl_exec($ch);
+        //關閉curl連線
+        curl_close($ch);
+        return "結束";
     }
+
+    
 }

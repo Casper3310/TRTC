@@ -41,6 +41,7 @@ Route::prefix('Device')->group(function(){
     Route::get('DeviceSocket/{DeviceSocket}', 'DeviceSocketController@show');
     Route::get('DeviceFireBox/{DeviceFireBox}', 'DeviceFireBoxController@show');
     Route::get('DeviceSmokeDetector/{DeviceSmokeDetector}', 'DeviceSmokeDetectorController@show');
+    Route::resource('TempSenser', 'TempSenserController');
 
 });
 

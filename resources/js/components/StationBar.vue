@@ -8,8 +8,11 @@
             >
                 {{ item.stations_name }}
             </router-link>
+            <router-link to="/station/temp">
+                溫溼度
+            </router-link>
             <router-link v-if="this.$store.state.role.includes('Admin')" to="/">
-                sss
+                管理者頁面
             </router-link>
         </ul>
     </div>

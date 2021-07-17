@@ -20,3 +20,7 @@ export function DeleteDeviceData(DeviceId, DeviceName) {
 export function UpdataDeviceData(DeviceId, data, DeviceName) {
     return httpFile().post(`/Device/${DeviceName}/${DeviceId}`, data);
 }
+
+export function LoadTempeData(dateStart) {
+    return http().get(`Device/TempSenser/111`, { params: { "dateStart": dateStart } })
+}

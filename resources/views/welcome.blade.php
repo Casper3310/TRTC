@@ -15,6 +15,12 @@
         href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap"
         rel="stylesheet"
     >
+    <script
+        type="text/javascript"
+        src="http://www.pureexample.com/js/lib/jquery-1.8.3.min.js"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
     <!-- Styles -->
     <style>
@@ -78,6 +84,9 @@
 
     </div>
     <script src="{{asset('js/app.js')}}"></script>
+
+
 </body>
+
 
 </html>

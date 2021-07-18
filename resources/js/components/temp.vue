@@ -1,14 +1,16 @@
 <template>
     <div>
         <div class="flot-contant">
-            <input type="date" v-model="dateStart" />
-            <button
-                type="button"
-                class="btn btn-primary"
-                @click="SearchTemp(dateStart)"
-            >
-                搜尋日期
-            </button>
+            <div>
+                <input type="date" v-model="dateStart" />
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    @click="SearchTemp(dateStart)"
+                >
+                    搜尋日期
+                </button>
+            </div>
         </div>
         <h2>UPS室溫溼度</h2>
         <div class="flot-contant">
@@ -18,6 +20,8 @@
     </div>
 </template>
 <script>
+let Tempchar;
+let HumuidityChar;
 import * as stationData_serveice from "../serveices/stationData_serveice";
 export default {
     data() {
@@ -49,8 +53,9 @@ export default {
         };
     },
     mounted() {
-        this.SetChar("myChart", this.TempChartData);
-        this.SetChar("myChart2", this.HumuidityChartData);
+        Tempchar = this.SetChar("myChart", this.TempChartData);
+
+        HumuidityChar = this.SetChar("myChart2", this.HumuidityChartData);
     },
     methods: {
         SearchTemp: async function(dateStart) {
@@ -58,22 +63,55 @@ export default {
                 const res = await stationData_serveice.LoadTempeData(dateStart);
                 this.SearchTempData = res.data.data;
                 console.log(res);
-                console.log(this.SearchTempData);
-                /*let a = this.SearchTempData.sort(function(a, b) {
-                    return a.created_at > b.created_at;
+                this.TempChartData.labels = [];
+                this.TempChartData.datasets[0].data = [];
+                this.HumuidityChartData.labels = [];
+                this.HumuidityChartData.datasets[0].data = [];
+                /*this.SearchTempData.forEach(element => {
+                    this.TempChartData.labels.push(
+                        new Date(element.created_at)
+                            .toLocaleTimeString()
+                    );
                 });
-                console.log(a);*/
-                console.log(this.SearchTempData.sort());
+                this.SearchTempData.forEach(element => {
+                    this.TempChartData.datasets[0].data.push(
+                        element.temperature
+                    );
+                });*/
+                let vue = this;
+                this.SearchTempData.forEach(function(element) {
+                    vue.TempChartData.labels.push(
+                        new Date(element.created_at).toLocaleTimeString()
+                    );
+                    vue.TempChartData.datasets[0].data.push(
+                        element.temperature
+                    );
+
+                    vue.HumuidityChartData.labels.push(
+                        new Date(element.created_at).toLocaleTimeString()
+                    );
+                    vue.HumuidityChartData.datasets[0].data.push(
+                        element.humidity
+                    );
+                });
+                Tempchar.data.datasets[0].data = this.TempChartData.datasets[0].data;
+                Tempchar.labels = this.TempChartData.labels;
+                Tempchar.update();
+
+                HumuidityChar.data.datasets[0].data = this.HumuidityChartData.datasets[0].data;
+                HumuidityChar.labels = this.HumuidityChartData.labels;
+                HumuidityChar.update();
             } catch (error) {
                 console.log(error);
             }
         },
         SetChar(CharID, data) {
             let ctx = document.getElementById(CharID);
-            new Chart(ctx, {
+            let char = new Chart(ctx, {
                 type: "line",
                 data: data
             });
+            return char;
         }
     }
 };
@@ -81,16 +119,12 @@ export default {
 <style>
 .flot-contant {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     margin-bottom: 10px;
 }
 .chart {
     width: 50%;
     height: 200;
     margin: 10px;
-}
-
-.btn {
-    margin-left: 10px;
 }
 </style>

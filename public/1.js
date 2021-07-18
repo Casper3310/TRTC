@@ -37,6 +37,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+var Tempchar;
+var HumuidityChar;
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -64,13 +68,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   mounted: function mounted() {
-    this.SetChar("myChart", this.TempChartData);
-    this.SetChar("myChart2", this.HumuidityChartData);
+    Tempchar = this.SetChar("myChart", this.TempChartData);
+    HumuidityChar = this.SetChar("myChart2", this.HumuidityChartData);
   },
   methods: {
     SearchTemp: function () {
       var _SearchTemp = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(dateStart) {
-        var res;
+        var res, vue;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -83,27 +87,50 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 res = _context.sent;
                 this.SearchTempData = res.data.data;
                 console.log(res);
-                console.log(this.SearchTempData);
-                /*let a = this.SearchTempData.sort(function(a, b) {
-                    return a.created_at > b.created_at;
+                this.TempChartData.labels = [];
+                this.TempChartData.datasets[0].data = [];
+                this.HumuidityChartData.labels = [];
+                this.HumuidityChartData.datasets[0].data = [];
+                /*this.SearchTempData.forEach(element => {
+                    this.TempChartData.labels.push(
+                        new Date(element.created_at)
+                            .toLocaleString()
+                            .split(" ")[1]
+                    );
                 });
-                console.log(a);*/
+                this.SearchTempData.forEach(element => {
+                    this.TempChartData.datasets[0].data.push(
+                        element.temperature
+                    );
+                });*/
 
-                console.log(this.SearchTempData.sort());
-                _context.next = 13;
+                vue = this;
+                this.SearchTempData.forEach(function (element) {
+                  vue.TempChartData.labels.push(new Date(element.created_at).toLocaleString().split(" ")[1]);
+                  vue.TempChartData.datasets[0].data.push(element.temperature);
+                  vue.HumuidityChartData.labels.push(new Date(element.created_at).toLocaleString().split(" ")[1]);
+                  vue.HumuidityChartData.datasets[0].data.push(element.humidity);
+                });
+                Tempchar.data.datasets[0].data = this.TempChartData.datasets[0].data;
+                Tempchar.labels = this.TempChartData.labels;
+                Tempchar.update();
+                HumuidityChar.data.datasets[0].data = this.HumuidityChartData.datasets[0].data;
+                HumuidityChar.labels = this.HumuidityChartData.labels;
+                HumuidityChar.update();
+                _context.next = 23;
                 break;
 
-              case 10:
-                _context.prev = 10;
+              case 20:
+                _context.prev = 20;
                 _context.t0 = _context["catch"](0);
                 console.log(_context.t0);
 
-              case 13:
+              case 23:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[0, 10]]);
+        }, _callee, this, [[0, 20]]);
       }));
 
       function SearchTemp(_x) {
@@ -114,10 +141,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }(),
     SetChar: function SetChar(CharID, data) {
       var ctx = document.getElementById(CharID);
-      new Chart(ctx, {
+
+      var _char = new Chart(ctx, {
         type: "line",
         data: data
       });
+
+      return _char;
     }
   }
 });
@@ -136,7 +166,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.flot-contant {\r\n    display: flex;\r\n    justify-content: center;\r\n    margin-bottom: 10px;\n}\n.chart {\r\n    width: 50%;\r\n    height: 200;\r\n    margin: 10px;\n}\n.btn {\r\n    margin-left: 10px;\n}\r\n", ""]);
+exports.push([module.i, "\n.flot-contant {\r\n    display: flex;\r\n    justify-content: space-around;\r\n    margin-bottom: 10px;\n}\n.chart {\r\n    width: 50%;\r\n    height: 200;\r\n    margin: 10px;\n}\r\n", ""]);
 
 // exports
 
@@ -190,40 +220,42 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "flot-contant" }, [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.dateStart,
-            expression: "dateStart"
-          }
-        ],
-        attrs: { type: "date" },
-        domProps: { value: _vm.dateStart },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
+      _c("div", [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.dateStart,
+              expression: "dateStart"
             }
-            _vm.dateStart = $event.target.value
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          attrs: { type: "button" },
+          ],
+          attrs: { type: "date" },
+          domProps: { value: _vm.dateStart },
           on: {
-            click: function($event) {
-              return _vm.SearchTemp(_vm.dateStart)
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.dateStart = $event.target.value
             }
           }
-        },
-        [_vm._v("\n            搜尋日期\n        ")]
-      )
+        }),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary",
+            attrs: { type: "button" },
+            on: {
+              click: function($event) {
+                return _vm.SearchTemp(_vm.dateStart)
+              }
+            }
+          },
+          [_vm._v("\n                搜尋日期\n            ")]
+        )
+      ])
     ]),
     _vm._v(" "),
     _c("h2", [_vm._v("UPS室溫溼度")]),

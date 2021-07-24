@@ -39,6 +39,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var Tempchar;
 var HumuidityChar;
 
@@ -47,19 +71,19 @@ var HumuidityChar;
     return {
       dateStart: "",
       TempChartData: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        labels: [],
         datasets: [{
           label: "溫度",
-          data: [12, 19, 3, 5, 2],
+          data: [],
           backgroundColor: ["red"],
           borderColor: ["red"]
         }]
       },
       HumuidityChartData: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        labels: [],
         datasets: [{
           label: "濕度",
-          data: [12, 19, 30, 5, 2, 6],
+          data: [],
           backgroundColor: ["blue"],
           borderColor: ["blue"]
         }]
@@ -86,29 +110,15 @@ var HumuidityChar;
               case 3:
                 res = _context.sent;
                 this.SearchTempData = res.data.data;
-                console.log(res);
                 this.TempChartData.labels = [];
                 this.TempChartData.datasets[0].data = [];
                 this.HumuidityChartData.labels = [];
                 this.HumuidityChartData.datasets[0].data = [];
-                /*this.SearchTempData.forEach(element => {
-                    this.TempChartData.labels.push(
-                        new Date(element.created_at)
-                            .toLocaleString()
-                            .split(" ")[1]
-                    );
-                });
-                this.SearchTempData.forEach(element => {
-                    this.TempChartData.datasets[0].data.push(
-                        element.temperature
-                    );
-                });*/
-
                 vue = this;
                 this.SearchTempData.forEach(function (element) {
-                  vue.TempChartData.labels.push(new Date(element.created_at).toLocaleString().split(" ")[1]);
+                  vue.TempChartData.labels.push(new Date(element.created_at).toLocaleTimeString());
                   vue.TempChartData.datasets[0].data.push(element.temperature);
-                  vue.HumuidityChartData.labels.push(new Date(element.created_at).toLocaleString().split(" ")[1]);
+                  vue.HumuidityChartData.labels.push(new Date(element.created_at).toLocaleTimeString());
                   vue.HumuidityChartData.datasets[0].data.push(element.humidity);
                 });
                 Tempchar.data.datasets[0].data = this.TempChartData.datasets[0].data;
@@ -117,20 +127,20 @@ var HumuidityChar;
                 HumuidityChar.data.datasets[0].data = this.HumuidityChartData.datasets[0].data;
                 HumuidityChar.labels = this.HumuidityChartData.labels;
                 HumuidityChar.update();
-                _context.next = 23;
+                _context.next = 22;
                 break;
 
-              case 20:
-                _context.prev = 20;
+              case 19:
+                _context.prev = 19;
                 _context.t0 = _context["catch"](0);
                 console.log(_context.t0);
 
-              case 23:
+              case 22:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[0, 20]]);
+        }, _callee, this, [[0, 19]]);
       }));
 
       function SearchTemp(_x) {
@@ -260,7 +270,37 @@ var render = function() {
     _vm._v(" "),
     _c("h2", [_vm._v("UPS室溫溼度")]),
     _vm._v(" "),
-    _vm._m(0)
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "plane_content table" }, [
+      _vm.SearchTempData.length
+        ? _c("table", [
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.SearchTempData, function(item, index) {
+                return _c("tr", { key: index }, [
+                  _c("td", [_vm._v(_vm._s(index + 1))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.temperature))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.humidity))]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(new Date(item.created_at).toLocaleTimeString()) +
+                        "\n                    "
+                    )
+                  ])
+                ])
+              }),
+              0
+            )
+          ])
+        : _c("div", [_vm._v("無資料")])
+    ])
   ])
 }
 var staticRenderFns = [
@@ -275,6 +315,22 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("div", { staticClass: "chart" }, [
         _c("canvas", { attrs: { id: "myChart2" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("項次")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("溫度")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("濕度")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("時間")])
       ])
     ])
   }

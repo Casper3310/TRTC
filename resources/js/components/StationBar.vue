@@ -14,6 +14,9 @@
             <router-link v-if="this.$store.state.role.includes('Admin')" to="/">
                 管理者頁面
             </router-link>
+            <router-link to="/ChatList">
+                聊天室
+            </router-link>
         </ul>
     </div>
 </template>

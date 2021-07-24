@@ -15,6 +15,10 @@
         href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap"
         rel="stylesheet"
     >
+    <link
+        href="/css/all.css"
+        rel="stylesheet"
+    >
     <script
         type="text/javascript"
         src="http://www.pureexample.com/js/lib/jquery-1.8.3.min.js"

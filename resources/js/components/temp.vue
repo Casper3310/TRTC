@@ -17,6 +17,30 @@
             <div class="chart"><canvas id="myChart"></canvas></div>
             <div class="chart"><canvas id="myChart2"></canvas></div>
         </div>
+        <div class="plane_content table">
+            <table v-if="SearchTempData.length">
+                <thead>
+                    <tr>
+                        <th scope="col">項次</th>
+                        <th scope="col">溫度</th>
+                        <th scope="col">濕度</th>
+                        <th scope="col">時間</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item, index) in SearchTempData" :key="index">
+                        <td>{{ index + 1 }}</td>
+                        <td>{{ item.temperature }}</td>
+                        <td>{{ item.humidity }}</td>
+                        <td>
+                            {{ new Date(item.created_at).toLocaleTimeString() }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div v-else>無資料</div>
+        </div>
     </div>
 </template>
 <script>
@@ -28,22 +52,22 @@ export default {
         return {
             dateStart: "",
             TempChartData: {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                labels: [],
                 datasets: [
                     {
                         label: "溫度",
-                        data: [12, 19, 3, 5, 2],
+                        data: [],
                         backgroundColor: ["red"],
                         borderColor: ["red"]
                     }
                 ]
             },
             HumuidityChartData: {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                labels: [],
                 datasets: [
                     {
                         label: "濕度",
-                        data: [12, 19, 30, 5, 2, 6],
+                        data: [],
                         backgroundColor: ["blue"],
                         borderColor: ["blue"]
                     }
@@ -62,22 +86,10 @@ export default {
             try {
                 const res = await stationData_serveice.LoadTempeData(dateStart);
                 this.SearchTempData = res.data.data;
-                console.log(res);
                 this.TempChartData.labels = [];
                 this.TempChartData.datasets[0].data = [];
                 this.HumuidityChartData.labels = [];
                 this.HumuidityChartData.datasets[0].data = [];
-                /*this.SearchTempData.forEach(element => {
-                    this.TempChartData.labels.push(
-                        new Date(element.created_at)
-                            .toLocaleTimeString()
-                    );
-                });
-                this.SearchTempData.forEach(element => {
-                    this.TempChartData.datasets[0].data.push(
-                        element.temperature
-                    );
-                });*/
                 let vue = this;
                 this.SearchTempData.forEach(function(element) {
                     vue.TempChartData.labels.push(

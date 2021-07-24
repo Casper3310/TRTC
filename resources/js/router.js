@@ -28,7 +28,12 @@ const routes = [
             name: "device",
             component: () => import('./components/DevicePlane.vue')
         }]
-    }
+    },
+    {
+        path: '/ChatList',
+        name: "ChatList",
+        component: () => import('./components/ChatList.vue')
+    },
 
 ]
 

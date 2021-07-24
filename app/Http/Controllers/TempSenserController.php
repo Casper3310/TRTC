@@ -69,7 +69,7 @@ class TempSenserController extends Controller
         //return response()->json(["data"=>$tempData,"message"=>"成功","statu_code"=>"200"], 200);
         $tempData = TempSenser::whereDate('created_at', '=', $request->dateStart)->get();
         if(count($tempData) === 0){
-            return response()->json(["message"=>"無資料","statu_code"=>"200"], 200);
+            return response()->json(["data"=>[],"message"=>"無資料","statu_code"=>"200"], 200);
         }
         else{         
             return response()->json(["data"=>$tempData,"message"=>"成功","statu_code"=>"200"], 200);

@@ -15,7 +15,10 @@
                 管理者頁面
             </router-link>
             <router-link to="/ChatList">
-                聊天室
+                ChatList
+            </router-link>
+            <router-link to="/ChatBox">
+                ChatBox
             </router-link>
         </ul>
     </div>

@@ -1,100 +1,101 @@
 <template>
-    <div class="chat-box">
-        <div class="box-header">
-            <div class="user-detail">
-                <span>使用者名稱</span>
-                <p>上線</p>
+    <div class="aaa">
+        <div class="chat-box">
+            <div class="box-header">
+                <div class="user-detail">
+                    <span>使用者名稱</span>
+                    <p>上線</p>
+                </div>
             </div>
-        </div>
-        <div class="context">
-            <div class="search">
-                <input
-                    type="text"
-                    name="search-bar"
-                    class="search-bar"
-                    placeholder="輸入搜尋名稱"
-                />
-                <button>
-                    <i class="fas fa-search"></i>
-                </button>
+            <div class="context">
+                <div class="search">
+                    <input
+                        type="text"
+                        name="search-bar"
+                        class="search-bar"
+                        placeholder="輸入搜尋名稱"
+                    />
+                    <button>
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <div class="user-list">
+                    <div
+                        class="user"
+                        v-for="(item, index) in UserList"
+                        :key="index"
+                    >
+                        <div class="user-detail">
+                            <span>{{ item.name }}</span>
+                            <p>最後訊息</p>
+                        </div>
+                        <div class="online">
+                            <i
+                                class="fas fa-circle"
+                                v-bind:class="{ active: item.revoke }"
+                            ></i>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="user-list">
-                <div class="user">
-                    <div class="user-detail">
-                        <span>使用者名稱</span>
-                        <p>最後訊息</p>
-                    </div>
-                    <div class="online">
-                        <i class="fas fa-circle"></i>
-                    </div>
-                </div>
-                <div class="user">
-                    <div class="user-detail">
-                        <span>使用者名稱222</span>
-                        <p>最後訊息222</p>
-                    </div>
-                    <div class="online">
-                        <i class="fas fa-circle"></i>
-                    </div>
-                </div>
-                <div class="user">
-                    <div class="user-detail">
-                        <span>使用者名稱333</span>
-                        <p>最後訊息333</p>
-                    </div>
-                    <div class="online">
-                        <i class="fas fa-circle"></i>
-                    </div>
-                </div>
-                <div class="user">
-                    <div class="user-detail">
-                        <span>使用者名稱</span>
-                        <p>最後訊息</p>
-                    </div>
-                    <div class="online">
-                        <i class="fas fa-circle"></i>
-                    </div>
-                </div>
-                <div class="user">
-                    <div class="user-detail">
-                        <span>使用者名稱222</span>
-                        <p>最後訊息222</p>
-                    </div>
-                    <div class="online">
-                        <i class="fas fa-circle"></i>
-                    </div>
-                </div>
-                <div class="user">
-                    <div class="user-detail">
-                        <span>使用者名稱333</span>
-                        <p>最後訊息333</p>
-                    </div>
-                    <div class="online">
-                        <i class="fas fa-circle"></i>
-                    </div>
-                </div>
+            <div class="chatbox-side">
+                <ChatBox></ChatBox>
             </div>
         </div>
     </div>
 </template>
 <script>
+let ChatUserInterval;
+import ChatBox from "./ChatBox.vue";
+import * as Chat_serveice from "../serveices/Chat_serveice";
 export default {
+    components: {
+        ChatBox
+    },
     data() {
         return {
-            aaa: "s"
+            UserList: []
         };
     },
-    mounted() {},
-    methods: {},
-    destroy() {}
+    mounted() {
+        ChatUserInterval = setInterval(this.LoadChatUser, 500);
+    },
+    methods: {
+        LoadChatUser: async function() {
+            try {
+                const res = await Chat_serveice.GetUserList();
+                this.UserList = res;
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    },
+    beforeDestroy() {
+        clearInterval(ChatUserInterval);
+    }
 };
 </script>
-<style>
+<style scoped>
+.aaa {
+    display: flex;
+    justify-content: center;
+}
+.chatbox-side {
+    width: 200px;
+    height: 200px;
+    left: -250px;
+    top: 0px;
+    background-color: cornflowerblue;
+    position: absolute;
+}
 .chat-box {
     width: 250px;
+    height: 400px;
+    position: relative;
 }
 .box-header {
     display: flex;
+    height: 75px;
     justify-content: center;
     border-bottom: 1px rgb(112, 109, 109) solid;
 }
@@ -138,12 +139,16 @@ export default {
 .user-detail {
     color: #333;
 }
-.online i {
+.online .active {
     color: rgb(0, 255, 85);
     margin-top: 15px;
 }
+.online i {
+    color: rgb(92, 92, 92);
+    margin-top: 15px;
+}
 .user-list {
-    max-height: 250px;
+    height: 325px;
     overflow-y: auto;
 }
 </style>

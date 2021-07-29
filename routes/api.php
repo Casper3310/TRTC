@@ -20,7 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('aaa', 'AuthController@sss');
 
-
 Route::prefix('Device')->group(function(){
     Route::middleware(['auth:api'])->group(function(){
         Route::middleware(['scope:manipulate_water'])->group(function(){
@@ -48,7 +47,6 @@ Route::prefix('Device')->group(function(){
 Route::resource('Circleline_Station', 'CirclelineStationController');
 Route::resource('Device', 'DeviceController');
 
-
 Route::prefix('auth')->group(function () {
     Route::post('register', 'AuthController@register');
     Route::post('login', 'AuthController@login');
@@ -57,8 +55,6 @@ Route::prefix('auth')->group(function () {
     });
     
 });
-
-
 
 Route::group(['prefix' => 'uesr' ],function () {
     Route::group(['middleware' => 'auth:api' ],function () {
@@ -77,4 +73,11 @@ Route::group(['prefix' => 'uesr' ],function () {
     Route::post('create_fire', function () {
         return response()->json(['message' => '消防操作', 'statu' => '200'], 200);
     });
+});
+
+Route::prefix('Chat')->group(function () {
+    Route::get('LoadChatUser', 'ChatController@LoadChatUser');
+    Route::get('Room', 'ChatController@rooms');
+    Route::get('Room/{roomId}/messages', 'ChatController@message');
+    Route::post('Room/{roomId}/message', 'ChatController@newMessage');
 });

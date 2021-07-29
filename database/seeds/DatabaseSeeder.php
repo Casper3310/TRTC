@@ -14,5 +14,6 @@ class DatabaseSeeder extends Seeder
         $this->call(circleline_station::class);
         $this->call(device ::class);
         $this->call(AdminSeeder::class);
+        $this->call(ChatRoomSeeder::class);
     }
 }
